@@ -1,4 +1,6 @@
-package com.example.letsfind;
+package br.edu.uneb.letsfind;
+
+import com.example.letsfind.R;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
