@@ -1,5 +1,9 @@
 package br.edu.uneb.letsfind;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.uneb.webclient.WebClient;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -9,6 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,6 +29,20 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        
+        
+        WebClient web = new WebClient(this, "naiara.tk", "/", "cookie.php");
+        
+        List<NameValuePair> parametros = new ArrayList<NameValuePair>(2);
+        parametros.add(new BasicNameValuePair("id", "12345"));
+        parametros.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
+        web.setParametros(parametros);
+        
+        //web.setMethod(WebClient.POST);
+        web.start();
+        
+        
+        
     }
 
 
