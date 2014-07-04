@@ -41,7 +41,11 @@ public class WebClient extends Thread{
 	private String path = null;
 	private String fileName = null;
 	
-	CookieDataSource cookies = null;
+	private CookieDataSource cookies = null;
+	private Context context = null;
+	private ResponseHandler responseHandler = null; 
+	
+	
 	
 	public static final int GET = 0;
 	public static final int POST = 1;
@@ -60,13 +64,18 @@ public class WebClient extends Thread{
 		this.parametros = parametros;
 	}
 	
-	public WebClient(Context context, String host, String path, String fileName){
-		cookies = new CookieDataSource(context);
+	public WebClient(Context context, String host, String path, String fileName, ResponseHandler responseHandler){
+		
 		this.hostAddress = host;
 		this.path = path;
 		this.fileName = fileName;
+		this.responseHandler = responseHandler;
+		this.context = context;
+		
+		cookies = new CookieDataSource(context);
 		cookies.setHostAddress(host);
 		cookies.setPath(path);
+		
 	}
 	
 	private String getStrParametros(InputStream is){
@@ -108,7 +117,9 @@ public class WebClient extends Thread{
 			content = executePost();
 		}
 		
-		Log.v("content", content);
+		responseHandler.execute(this.context, content);
+		
+		//Log.v("content", content);
 		
 
 		/*
@@ -144,7 +155,6 @@ public class WebClient extends Thread{
 	public String executeGet() {
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
-		
 		
 		UrlEncodedFormEntity par = null;
 		
@@ -216,8 +226,13 @@ public class WebClient extends Thread{
 		// Create a new HttpClient and Post Header
 		StringBuilder builder = new StringBuilder();
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost("http://"+ hostAddress + path+fileName);
+		
+		String url = "http://"+ hostAddress + path+fileName;
+		
+		HttpPost httpPost = new HttpPost(url);
 
+		Log.v("POST URL", url);
+		
 		try {
 			// Add your data
 			if(parametros != null)

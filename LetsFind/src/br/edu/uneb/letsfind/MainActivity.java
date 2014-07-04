@@ -3,11 +3,14 @@ package br.edu.uneb.letsfind;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uneb.webclient.ResponseHandler;
 import br.edu.uneb.webclient.WebClient;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +19,8 @@ import android.view.ViewGroup;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -31,7 +36,35 @@ public class MainActivity extends ActionBarActivity {
         }
         
         
-        WebClient web = new WebClient(this, "naiara.tk", "/", "cookie.php");
+        WebClient web = new WebClient(this, "naiara.tk", "/", "sample.json",
+        new ResponseHandler() {
+			
+			@Override
+			public void execute(Context context, String content) {
+				try {
+
+					JSONObject jsonObject = new JSONObject(content);
+
+					Log.v("WebClient","executando a segunda thread");
+
+					JSONArray values = (JSONArray) jsonObject.get("values");
+
+					for (int i = 0; i < values.length(); i++) {
+						JSONObject innerObj = (JSONObject) values.get(i);
+
+						String iorder = (String) innerObj.get("order");
+						String iname = (String) innerObj.get("name");
+						String iponts = (String) innerObj.get("ponts");
+
+						Log.v("app",iorder + " / " + iname + " / " + iponts);
+
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
         
         List<NameValuePair> parametros = new ArrayList<NameValuePair>(2);
         parametros.add(new BasicNameValuePair("id", "12345"));
