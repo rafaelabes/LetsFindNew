@@ -117,37 +117,9 @@ public class WebClient extends Thread{
 			content = executePost();
 		}
 		
+		if(responseHandler != null)
 		responseHandler.execute(this.context, content);
 		
-		//Log.v("content", content);
-		
-
-		/*
-		
-		try {
-
-			JSONObject jsonObject = new JSONObject(content);
-
-			Log.v("WebClient","executando a segunda thread");
-
-			JSONArray values = (JSONArray) jsonObject.get("values");
-
-			for (int i = 0; i < values.length(); i++) {
-				JSONObject innerObj = (JSONObject) values.get(i);
-
-				String iorder = (String) innerObj.get("order");
-				String iname = (String) innerObj.get("name");
-				String iponts = (String) innerObj.get("ponts");
-
-				Log.v("app",iorder + " / " + iname + " / " + iponts);
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		*/
 	}
 
 
