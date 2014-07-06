@@ -8,62 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.edu.uneb.letsfind.MainActivity$PlaceholderFragment" >
-
-    <!-- 
-    
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button3"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:background="#363636"
-        android:text="@string/About"
-        android:textColor="@+color/white"
-        android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button4"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_marginBottom="19dp"
-        android:background="#363636"
-        android:text="@string/Market"
-        android:textColor="@color/white"
-        android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
-        />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_marginBottom="19dp"
-        android:background="#363636"
-        android:text="@string/Ranking"
-        android:textColor="@color/white"
-        android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
-        />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
-        android:background="#363636"
-        android:text="@string/Play"
-        android:textColor="@color/white"
-        android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
-
-    
-    -->
-    
+  
     
     <ImageView
         android:contentDescription="@string/Coins"
