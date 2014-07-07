@@ -31,6 +31,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,8 +44,8 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/moedas" />
 
             <TextView
@@ -58,8 +64,8 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/estrela" />
 
             <TextView
@@ -69,12 +75,6 @@
                 android:text="400" />
 
         </LinearLayout>
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/button1"

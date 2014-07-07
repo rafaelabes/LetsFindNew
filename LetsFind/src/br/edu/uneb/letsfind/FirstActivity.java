@@ -37,7 +37,7 @@ public class FirstActivity extends ActionBarActivity implements IHello {
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, new MercadoFragment()).commit();
 		}
 		
 		try{
