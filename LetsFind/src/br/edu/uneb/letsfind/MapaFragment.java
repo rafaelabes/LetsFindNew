@@ -4,14 +4,20 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.Projection;
 //import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.LatLngBoundsCreator;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,13 +54,12 @@ public class MapaFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		Log.e("MapaFragment","onViewCreated");
-		
 		 map = ((SupportMapFragment) getFragmentManager()
 	                .findFragmentById(R.id.map)).getMap();
 	        
 	        if(map != null){
-	        map.addMarker(new MarkerOptions().position(BRASIL));
+	        	
+	        //map.addMarker(new MarkerOptions().position(BRASIL));
 	        
 	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
 			map.animateCamera(update);
@@ -68,10 +73,32 @@ public class MapaFragment extends Fragment {
 	    	        @Override
 	    	        public void onMapClick(LatLng point) {
 	    	        	
-	    	            map.addMarker(new MarkerOptions().position(point));
+	    	        	
+	    	        	MarkerOptions mo = new MarkerOptions();
+	    	        	mo.position(point);
+	    	        	//mo.visible(false);
+	    	            map.addMarker(mo);
+	    	            
+	    	            //LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+	    	            
+	    	            //bounds.contains(BRASIL);
+	    	            
+	    	            Projection proj = map.getProjection();
+	    	            
+	    	            @SuppressWarnings("unused")
+						Point xy = proj.toScreenLocation(point);
+	    	            
+	    	            
+	    	            
+	    	            
+	    	            
+	    	            
+	    	            
+	    	            
 
 	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
 	    	        }
+	    	        
 	    		});
 	        
 	        
