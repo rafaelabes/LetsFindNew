@@ -5,7 +5,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.Projection;
-//import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -34,6 +34,10 @@ import android.widget.TextView;
 public class MapaFragment extends Fragment {
 
 	private GoogleMap map = null;
+	
+	private Float zoom = null;
+	
+	private final Double raio = 3.0694775721281596E-4;
 	
 	private final LatLng FAROL_DA_BARRA = new LatLng(-13.010315034340541,-38.53296708315611);
 	
@@ -64,8 +68,9 @@ public class MapaFragment extends Fragment {
 	        
 	        if(map != null){
 	        	
-	        //map.addMarker(new MarkerOptions().position(BRASIL));
+	        map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
 	        
+	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
 			map.animateCamera(update);
 	        
@@ -96,35 +101,28 @@ public class MapaFragment extends Fragment {
 
 	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
 	    	            
-	    	            
-	    	            showFoundDialog(getActivity());
+	    	            if((zoom >= 18) && (Geometry.isPointInCircle(FAROL_DA_BARRA.latitude, FAROL_DA_BARRA.longitude, raio, point.latitude, point.longitude))){
+	    	            	//o usuario pode clicar no mapa a partir do zoom 18
+	    	            	showFoundDialog(getActivity());
+	    	            }
 	    	            
 	    	        }
 	    	        
 	    		});
-	        
-	        
-	        CircleOptions opt = new CircleOptions();
-			opt.center(FAROL_DA_BARRA);
-			opt.radius(100);
-			map.addCircle(opt);
+
 			
 			//TODO: não encontrei uma função para mudar o raio de acordo com o zoom
-			/*
+			
 			map.setOnCameraChangeListener(new OnCameraChangeListener() {
 				@Override
 				public void onCameraChange(CameraPosition position) {
-					float zoom = position.zoom;
+					zoom = position.zoom;
 					
-					CircleOptions opt2 = new CircleOptions();
-					opt2.center(FAROL_DA_BARRA);
-					map.clear();
-					opt2.radius(100 * zoom);
-					map.addCircle(opt2);
+					Log.v("Zoom", zoom.toString());
 					
 				}
 			});
-			//*/
+			
 
 		
 		
@@ -166,24 +164,6 @@ public class MapaFragment extends Fragment {
  
 		dialog.show();
 		
-		
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-	
-	
-	@Override
-    public void onStart() {
-        super.onStart();        
-    }
-	
-	
-	@Override
-	public void onResume() {
-		super.onResume();
 	}
     
 }

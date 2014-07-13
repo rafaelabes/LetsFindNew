@@ -48,8 +48,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.edu.uneb.letsfind.SecondActivity"
-            android:label="@string/title_activity_second" >
+            android:name="br.edu.uneb.letsfind.MapaActivity"
+            android:label="@string/title_activity_mapa" >
+        </activity>
+        <activity
+            android:name="br.edu.uneb.letsfind.MercadoActivity"
+            android:label="@string/title_activity_mapa" >
+        </activity>
+        <activity
+            android:name="br.edu.uneb.letsfind.AboutActivity"
+            android:label="@string/title_activity_mapa" >
+        </activity>
+        <activity
+            android:name="br.edu.uneb.letsfind.LoginActivity"
+            android:label="@string/title_activity_mapa" >
         </activity>
     </application>
 

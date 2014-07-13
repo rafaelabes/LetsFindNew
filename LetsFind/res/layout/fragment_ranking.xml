@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background590"
     android:gravity="center|top"
     android:orientation="vertical" >
 
@@ -9,20 +10,12 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/mercado" />
+        android:src="@drawable/ranking_1" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:layout_weight="0.08" >
-       
+        android:layout_height="wrap_content" >
     </ListView>
-
-    <Button
-        android:id="@+id/buttonSobre"
-        android:layout_width="116dp"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 </LinearLayout>

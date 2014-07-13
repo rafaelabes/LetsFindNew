@@ -6,16 +6,12 @@ import java.util.List;
 import br.edu.uneb.webclient.ResponseHandler;
 import br.edu.uneb.webclient.WebClient;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -31,18 +27,12 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
         	
-        	/*
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-            */
         	getSupportFragmentManager().beginTransaction()
-            .add(R.id.container, new MapaFragment())
+            .add(R.id.container, new MenuFragment())
             .commit();
         	
             
         }
-        
         
         WebClient web = new WebClient(this, "naiara.tk", "/", "sample.json",
         new ResponseHandler() {
@@ -82,8 +72,6 @@ public class MainActivity extends ActionBarActivity {
         //web.setMethod(WebClient.POST);
         web.start();
         
-        
-        
     }
 
 
@@ -105,22 +93,6 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
     }
 
 }
