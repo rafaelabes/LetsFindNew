@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.LatLngBoundsCreator;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -25,6 +27,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MapaFragment extends Fragment {
 
@@ -88,15 +93,12 @@ public class MapaFragment extends Fragment {
 	    	            @SuppressWarnings("unused")
 						Point xy = proj.toScreenLocation(point);
 	    	            
-	    	            
-	    	            
-	    	            
-	    	            
-	    	            
-	    	            
-	    	            
 
 	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
+	    	            
+	    	            
+	    	            showFoundDialog(getActivity());
+	    	            
 	    	        }
 	    	        
 	    		});
@@ -124,6 +126,45 @@ public class MapaFragment extends Fragment {
 			});
 			//*/
 
+		
+		
+	}
+	
+	
+	
+	//public void showNotFoundDialog(Context context){}
+	//public void showFoundDialog2(Context context){}
+	public void showFoundDialog(Context context){
+		
+		if(context == null){
+			Log.wtf("showFoundDialog", "context is null");
+			return;
+		}
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(context);
+		dialog.setContentView(R.layout.dialog_found);
+		dialog.setTitle("Title...");
+ 
+			// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		text.setText("Parabens! Você acertou");
+		
+		ImageView image = (ImageView) dialog.findViewById(R.id.dialogFoundImage);
+		image.setImageResource(R.drawable.ic_launcher);
+ 
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+			// if button is clicked, close the custom dialog
+			
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+				
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+ 
+		dialog.show();
 		
 		
 	}

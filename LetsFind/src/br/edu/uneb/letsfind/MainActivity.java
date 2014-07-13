@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
             */
         	getSupportFragmentManager().beginTransaction()
-            .add(R.id.container, new MercadoFragment())
+            .add(R.id.container, new MapaFragment())
             .commit();
         	
             
