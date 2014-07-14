@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class GameDbHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "letsfind.game.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 	
 	public static final String TABLE_RANK = "rank";
 	public static final String RANK_ID = "id";
@@ -97,7 +97,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		    PONTO_NOME + "      VARCHAR( 45 ),"+
 		    PONTO_LATITUDE + "  REAL,"+
 		    PONTO_LONGITUDE + " REAL,"+
-		    PONTO_RAIO + " REAL" +
+		    PONTO_RAIO + " REAL, " +
 		    PONTO_FK_PERGUNTA + "      INTEGER        REFERENCES " + TABLE_PERGUNTA + " ( " + PERGUNTA_ID + " )"+
 		    ");";
 	

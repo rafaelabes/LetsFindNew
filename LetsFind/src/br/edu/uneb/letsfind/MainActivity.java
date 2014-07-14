@@ -91,58 +91,59 @@ public class MainActivity extends ActionBarActivity {
         
         Tema tema = temaDS.createTema("Copa do Mundo 2014");
         
-        temaDS.close();
+        //Log.wtf("Tema", tema.getNome());
         
-        PontoTuristicoDataSource ptd = new PontoTuristicoDataSource(this);
-        ptd.open();
+        PontoTuristicoDataSource pontoDS = new PontoTuristicoDataSource(this);
+        pontoDS.open();
         
         PerguntaDataSource perDS = new PerguntaDataSource(this);
         perDS.open();
         
         Pergunta pergunta = perDS.createPergunta(tema, "Arena Fonte Nova" , false);
-        ptd.createPontoTuristico(pergunta, "Arena Fonte Nova", -12.97883,-38.504371, raio);
+        pontoDS.createPontoTuristico(pergunta, "Arena Fonte Nova", -12.97883,-38.504371, raio);
         
         pergunta = perDS.createPergunta(tema, "Arena Corinthians" , false);
-        ptd.createPontoTuristico(pergunta, "Arena Corinthians", -23.545333,-46.473702, raio);
+        pontoDS.createPontoTuristico(pergunta, "Arena Corinthians", -23.545333,-46.473702, raio);
         
         pergunta = perDS.createPergunta(tema, "Mané Garrincha" , false);
-        ptd.createPontoTuristico(pergunta, "Mané Garrincha", -15.783519,-47.899211, raio);
+        pontoDS.createPontoTuristico(pergunta, "Mané Garrincha", -15.783519,-47.899211, raio);
         
         pergunta = perDS.createPergunta(tema, "Mineirão Estádio" , false);
-        ptd.createPontoTuristico(pergunta,"Mineirão Estádio", -19.865867,-43.971132,raio);
+        pontoDS.createPontoTuristico(pergunta,"Mineirão Estádio", -19.865867,-43.971132,raio);
         
         pergunta = perDS.createPergunta(tema, "Maracanã Estádio" , false);
-        ptd.createPontoTuristico(pergunta,"Maracanã Estádio", -22.9127667,-43.2300316, raio);
+        pontoDS.createPontoTuristico(pergunta,"Maracanã Estádio", -22.9127667,-43.2300316, raio);
         
         pergunta = perDS.createPergunta(tema, "José do Rego Maciel Estádio" , false);
-        ptd.createPontoTuristico(pergunta,"José do Rego Maciel Estádio", -8.026699,-34.891111, raio);
+        pontoDS.createPontoTuristico(pergunta,"José do Rego Maciel Estádio", -8.026699,-34.891111, raio);
         
         pergunta = perDS.createPergunta(tema, "Villa Estádio Alvorada" , false);
-        ptd.createPontoTuristico(pergunta,"Villa Estádio Alvorada", -3.08026,-60.034402, raio);
+        pontoDS.createPontoTuristico(pergunta,"Villa Estádio Alvorada", -3.08026,-60.034402, raio);
         
         pergunta = perDS.createPergunta(tema, "Arena da Amazônia" , false);
-        ptd.createPontoTuristico(pergunta,"Arena da Amazônia", -3.0836637,-60.0279703, raio);
+        pontoDS.createPontoTuristico(pergunta,"Arena da Amazônia", -3.0836637,-60.0279703, raio);
         
         pergunta = perDS.createPergunta(tema, "Arena Pantanal" , false);
-        ptd.createPontoTuristico(pergunta,"Arena Pantanal", -15.604017,-56.121632, raio);
+        pontoDS.createPontoTuristico(pergunta,"Arena Pantanal", -15.604017,-56.121632, raio);
         
         pergunta = perDS.createPergunta(tema, "Estadio Beira Rio" , false);
-        ptd.createPontoTuristico(pergunta,"Estadio Beira Rio", -30.0654729,-51.2358289, raio);
+        pontoDS.createPontoTuristico(pergunta,"Estadio Beira Rio", -30.0654729,-51.2358289, raio);
         
         pergunta = perDS.createPergunta(tema, "Arena da Baixada"  , false);
-        ptd.createPontoTuristico(pergunta,"Arena da Baixada", -25.448212,-49.276987, raio);
+        pontoDS.createPontoTuristico(pergunta,"Arena da Baixada", -25.448212,-49.276987, raio);
         
         pergunta = perDS.createPergunta(tema,"Estadio das Dunas"  , false);
-        ptd.createPontoTuristico(pergunta,"Estadio das Dunas", -5.826827,-35.21243, raio);
+        pontoDS.createPontoTuristico(pergunta,"Estadio das Dunas", -5.826827,-35.21243, raio);
 
         pergunta = perDS.createPergunta(tema, "Estadio Castelão" , false);
-        ptd.createPontoTuristico(pergunta,"Estadio Castelão", -3.807312,-38.522269, raio);
+        pontoDS.createPontoTuristico(pergunta,"Estadio Castelão", -3.807312,-38.522269, raio);
         
         pergunta = perDS.createPergunta(tema, "Arena da baixada" , false);
-        ptd.createPontoTuristico(pergunta,"Arena da baixada", -25.448212,-49.276987, raio);
+        pontoDS.createPontoTuristico(pergunta,"Arena da baixada", -25.448212,-49.276987, raio);
 
+        temaDS.close();
         perDS.close();
-        ptd.close();
+        pontoDS.close();
         		 
         
     }
