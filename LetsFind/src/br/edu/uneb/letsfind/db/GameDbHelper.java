@@ -48,10 +48,10 @@ public class GameDbHelper extends SQLiteOpenHelper {
 	private static final String CREATE_TABLE_PERGUNTA_3 = "CREATE TABLE " + TABLE_PERGUNTA + " ("
 			+ PERGUNTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+ PERGUNTA_TEXTO + " TEXT,"
-			+ PERGUNTA_TEXTO + " TEXT,"
 			+ PERGUNTA_RESPONDIDA + " BOOLEAN," 
 			//+ PERGUNTA_RAIO + " REAL,"
-			+ PERGUNTA_FK_TEMA + " INTEGER REFERENCES "+ TABLE_TEMA +" ( " + TEMA_ID + " )";
+			+ PERGUNTA_FK_TEMA + " INTEGER REFERENCES "+ TABLE_TEMA +" ( " + TEMA_ID + " )"
+			+ ")";
 	
 	
 	
@@ -92,13 +92,13 @@ public class GameDbHelper extends SQLiteOpenHelper {
 	public static final String PONTO_FK_PERGUNTA = "fk_pergunta";
 	
 	
-	private static final String CREATE_TABLE_PONTO_5 = "CREATE TABLE pontoTuristico ("+ 
+	private static final String CREATE_TABLE_PONTO_5 = "CREATE TABLE "+TABLE_PONTO+" ("+ 
 		    PONTO_ID + "        INTEGER        PRIMARY KEY AUTOINCREMENT,"+
 		    PONTO_NOME + "      VARCHAR( 45 ),"+
 		    PONTO_LATITUDE + "  REAL,"+
 		    PONTO_LONGITUDE + " REAL,"+
 		    PONTO_RAIO + " REAL" +
-		    PONTO_FK_PERGUNTA + "      INTEGER        REFERENCES " + TABLE_PERGUNTA + " ( " + PERGUNTA_ID + " ),"+
+		    PONTO_FK_PERGUNTA + "      INTEGER        REFERENCES " + TABLE_PERGUNTA + " ( " + PERGUNTA_ID + " )"+
 		    ");";
 	
 	
@@ -108,18 +108,18 @@ public class GameDbHelper extends SQLiteOpenHelper {
 	public static final String DICA_ID = "id";
 	public static final String DICA_VALOR = "valorDeCompra";
 	public static final String DICA_TEXTO = "texto";
-	public static final String DICA_LATITUDE = "texto";
-	public static final String DICA_LONGITUDE = "texto";
-	public static final String DICA_RAIO = "texto";
+	public static final String DICA_LATITUDE = "latitude";
+	public static final String DICA_LONGITUDE = "longitude";
+	public static final String DICA_RAIO = "raio";
 	public static final String DICA_FK_PERGUNTA = "fk_pergunta";
 	
-	private static final String CREATE_TABLE_DICA_6 = "CREATE TABLE dica ("+ 
-		    DICA_ID + "             INTEGER PRIMARY KEY AUTOINCREMENT,"+
-		    DICA_VALOR + "  REAL,"+
-		    DICA_TEXTO + "          TEXT,"+
-		    DICA_LATITUDE + "  REAL,"+
-		    DICA_LONGITUDE + " REAL,"+
-		    DICA_RAIO + " REAL" +
+	private static final String CREATE_TABLE_DICA_6 = "CREATE TABLE "+TABLE_DICA+" ("+ 
+		    DICA_ID + "             INTEGER PRIMARY KEY AUTOINCREMENT, "+
+		    DICA_VALOR + "  REAL, "+
+		    DICA_TEXTO + "          TEXT, "+
+		    DICA_LATITUDE + "  REAL, "+
+		    DICA_LONGITUDE + " REAL, "+
+		    DICA_RAIO + " REAL, " +
 		    DICA_FK_PERGUNTA +" INTEGER REFERENCES " + TABLE_PERGUNTA + " ( " + PERGUNTA_ID + " )"+ 
     ");";
 	

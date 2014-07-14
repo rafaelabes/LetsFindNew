@@ -32,17 +32,17 @@ public class PerguntaDataSource {
 	}
 	
 	//
-	public Pergunta cursorToPergunta(Cursor cursor){
+	private Pergunta cursorToPergunta(Cursor cursor){
 		Pergunta pergunta = new Pergunta();
 		pergunta.setId(cursor.getLong(0));
 		pergunta.setTexto(cursor.getString(1));
-		pergunta.setRespondida(Boolean.parseBoolean(cursor.getString(3)));
-		pergunta.setFkTema(cursor.getLong(4));
+		pergunta.setRespondida(Boolean.parseBoolean(cursor.getString(2)));
+		pergunta.setFkTema(cursor.getLong(3));
 		return pergunta;
 	}
 	
 	//
-	Pergunta createPergunta(Tema tema, String texto, boolean respondida){
+	public Pergunta createPergunta(Tema tema, String texto, boolean respondida){
 		
 		long fkTema = tema.getId();
 		
@@ -70,13 +70,13 @@ public class PerguntaDataSource {
 	}
 	
 	//
-	void deletePergunta(Pergunta pergunta){
+	public void deletePergunta(Pergunta pergunta){
 		long id = pergunta.getId();		
 		database.delete(GameDbHelper.TABLE_PERGUNTA, GameDbHelper.PERGUNTA_ID + " = " + id, null);
 	}
 	
 	//
-	List<Pergunta> getPerguntasByTema(Tema tema){
+	public List<Pergunta> getPerguntasByTema(Tema tema){
 		
 		long fkTema = tema.getId();
 		List<Pergunta> perguntas = new ArrayList<Pergunta>();	

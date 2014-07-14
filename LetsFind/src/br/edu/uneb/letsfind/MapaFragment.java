@@ -43,6 +43,8 @@ public class MapaFragment extends Fragment {
 	
 	private final LatLng BRASIL = new LatLng(-13.921117774841237, -54.58670552819967);
 	
+	
+	
     public MapaFragment() {
     	
     }
@@ -68,11 +70,15 @@ public class MapaFragment extends Fragment {
 	        
 	        if(map != null){
 	        	
-	        map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
+	        //map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
 	        
 	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
 			map.animateCamera(update);
+			
+			
+			
+			
 	        
 	        }
 	        
