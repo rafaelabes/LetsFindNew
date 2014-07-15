@@ -39,9 +39,9 @@ public class PontoTuristicoDataSource {
 		PontoTuristico pontoTuristico = new PontoTuristico();
 		pontoTuristico.setId(cursor.getLong(0));
 		pontoTuristico.setNome(cursor.getString(1));
-		pontoTuristico.setLatitude(cursor.getLong(2));
-		pontoTuristico.setLongitude(cursor.getLong(3));
-		pontoTuristico.setRaio(cursor.getLong(4));
+		pontoTuristico.setLatitude(cursor.getDouble(2));
+		pontoTuristico.setLongitude(cursor.getDouble(3));
+		pontoTuristico.setRaio(cursor.getDouble(4));
 		pontoTuristico.setFkPergunta(cursor.getLong(5));
 		
 		return pontoTuristico;
@@ -75,17 +75,56 @@ public class PontoTuristicoDataSource {
 		
 	}
 	
-	int deletePontoTuristico(PontoTuristico pontoTuristico){
+	public int deletePontoTuristico(PontoTuristico pontoTuristico){
 		long id = pontoTuristico.getId();		
 		return database.delete(GameDbHelper.TABLE_PONTO, GameDbHelper.PONTO_ID + " = " + id, null);
 	}
 	
-	List<PontoTuristico> getAllPontoTuristico(){
+	public List<PontoTuristico> getAllPontoTuristico(){
 		List<PontoTuristico> pontosTuristicos = new ArrayList<PontoTuristico>();	
 		
 		Cursor cursor = database.query(GameDbHelper.TABLE_PONTO,
 				allColumns,
 				null,null, null, null, null);
+		
+		cursor.moveToFirst();
+		
+		while(!cursor.isAfterLast()){
+			PontoTuristico pontoTuristico = cursorToPontoTuristico(cursor);
+			pontosTuristicos.add(pontoTuristico);
+			cursor.moveToNext();
+		}
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return pontosTuristicos;
+	}
+	
+	public long getCount(){
+		
+		Cursor cursor = database.rawQuery("select count(*) from " + GameDbHelper.TABLE_PONTO, null);
+		return cursor.getLong(0);
+		
+	}
+	
+	public long getCountByPergunta(Long fkPergunta){
+		
+		Cursor cursor = database.rawQuery("select count(*) from " + GameDbHelper.TABLE_PONTO + " where "+ GameDbHelper.PONTO_FK_PERGUNTA + " = ?", new String[]{ fkPergunta.toString() });
+		return cursor.getLong(0);
+		
+	}
+	
+	
+	public List<PontoTuristico> getPontoTuristicoByPergunta(Pergunta pergunta){
+		List<PontoTuristico> pontosTuristicos = new ArrayList<PontoTuristico>();
+		
+		Long fkPergunta = pergunta.getId();
+		
+		Cursor cursor = database.query(GameDbHelper.TABLE_PONTO,
+				allColumns,
+				GameDbHelper.PONTO_FK_PERGUNTA + " = ?",
+				new String[]{ fkPergunta.toString() }, null, null, null);
 		
 		cursor.moveToFirst();
 		

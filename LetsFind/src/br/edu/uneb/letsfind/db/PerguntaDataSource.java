@@ -99,4 +99,13 @@ public class PerguntaDataSource {
 		
 		return perguntas;
 	}
+	
+	
+	public int getCount(){
+				
+		Cursor cursor = database.rawQuery("select count(*) from " + GameDbHelper.TABLE_PERGUNTA, null);
+		return cursor.getInt(0);
+		
+	}
+	
 }

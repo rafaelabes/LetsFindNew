@@ -1,5 +1,15 @@
 package br.edu.uneb.letsfind;
 
+import java.util.Iterator;
+import java.util.List;
+
+import br.edu.uneb.letsfind.db.Pergunta;
+import br.edu.uneb.letsfind.db.PerguntaDataSource;
+import br.edu.uneb.letsfind.db.PontoTuristico;
+import br.edu.uneb.letsfind.db.PontoTuristicoDataSource;
+import br.edu.uneb.letsfind.db.Tema;
+import br.edu.uneb.letsfind.db.TemaDataSource;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -69,16 +79,60 @@ public class MapaFragment extends Fragment {
 	                .findFragmentById(R.id.map)).getMap();
 	        
 	        if(map != null){
+	        
+	        	/*
+	        	map.addMarker(new MarkerOptions().position(
+        				new LatLng(-12.97883, -38.504371)
+        		));
+	        	*/
+	        	
 	        	
 	        //map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
+	        
+	        	
+	        
+	        PerguntaDataSource pergDS = new PerguntaDataSource(getActivity());
+	        pergDS.open();
+	        
+	        PontoTuristicoDataSource pontoDS = new PontoTuristicoDataSource(getActivity());
+	        pontoDS.open();
+	        
+	        Tema t = new Tema();
+	        t.setId(1);
+	        
+	        ///*
+	        List<Pergunta> perguntas = pergDS.getPerguntasByTema(t);
+	        
+	        Iterator<Pergunta> it1 = perguntas.iterator();
+	        while(it1.hasNext()){
+	        	Pergunta pergunta = it1.next();
+	        	
+	        	List<PontoTuristico> pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
+	        	
+	        	Iterator<PontoTuristico> it2 = pontos.iterator();
+	        	
+	        	while(it2.hasNext()){
+	        		
+	        		PontoTuristico ponto = it2.next();
+	        		
+	        		Log.v("Lat", String.valueOf(ponto.getLatitude()));
+	        		Log.v("Long", String.valueOf(ponto.getLongitude()));
+	        		
+	        		map.addMarker(new MarkerOptions().position(
+	        				new LatLng(ponto.getLatitude(), ponto.getLongitude())
+	        		));
+	        	}
+	        }
+	        //*/
+	        pergDS.close();
+	        pontoDS.close();
+	        
+	        	
+	        
 	        
 	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
 			map.animateCamera(update);
-			
-			
-			
-			
 	        
 	        }
 	        
@@ -99,10 +153,10 @@ public class MapaFragment extends Fragment {
 	    	            
 	    	            //bounds.contains(BRASIL);
 	    	            
+	    	            /*
 	    	            Projection proj = map.getProjection();
-	    	            
-	    	            @SuppressWarnings("unused")
 						Point xy = proj.toScreenLocation(point);
+						*/
 	    	            
 
 	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");

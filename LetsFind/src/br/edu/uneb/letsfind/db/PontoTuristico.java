@@ -8,9 +8,9 @@ public class PontoTuristico {
 	private long id;
 	private String nome;
 	
-	private long latitude;
-	private long longitude;
-	private long raio;
+	private double latitude;
+	private double longitude;
+	private double raio;
 	
 	private long fkPergunta;
 	
@@ -26,22 +26,22 @@ public class PontoTuristico {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public long getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public long getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public long getRaio() {
+	public double getRaio() {
 		return raio;
 	}
-	public void setRaio(long raio) {
+	public void setRaio(double raio) {
 		this.raio = raio;
 	}
 	public long getFkPergunta() {

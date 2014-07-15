@@ -1,5 +1,6 @@
 package br.edu.uneb.letsfind.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 //import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class GameDbHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "letsfind.game.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	
 	public static final String TABLE_RANK = "rank";
 	public static final String RANK_ID = "id";
@@ -123,10 +124,115 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		    DICA_FK_PERGUNTA +" INTEGER REFERENCES " + TABLE_PERGUNTA + " ( " + PERGUNTA_ID + " )"+ 
     ");";
 	
-	/* dica confere */
+	
+	/* enchendo os bancos */
+	private long fillTema(SQLiteDatabase db, String nome){
+		ContentValues values = new ContentValues();
+		values.put(TEMA_NOME, nome);
+		return db.insert(GameDbHelper.TABLE_TEMA, null, values);
+	}
+	
+	private long fillPergunta(SQLiteDatabase db, long fkTema, String nome){
+		ContentValues values = new ContentValues();
+		values.put(GameDbHelper.PERGUNTA_TEXTO, nome);
+		values.put(GameDbHelper.PERGUNTA_RESPONDIDA, false);
+		values.put(GameDbHelper.PERGUNTA_FK_TEMA, fkTema);
+		return db.insert(GameDbHelper.TABLE_PERGUNTA, null, values);
+	}
 	
 	
+	private long fillPonto(SQLiteDatabase db, long fkPergunta, String nome, double latitude, double longitude, double raio){
+		ContentValues values = new ContentValues();
+		values.put(GameDbHelper.PONTO_NOME, nome);
+		values.put(GameDbHelper.PONTO_LATITUDE, latitude);
+		values.put(GameDbHelper.PONTO_LONGITUDE, longitude);
+		values.put(GameDbHelper.PONTO_RAIO, raio);
+		values.put(GameDbHelper.PONTO_FK_PERGUNTA, fkPergunta);
+		return db.insert(GameDbHelper.TABLE_PONTO, null, values);
+	}
 	
+	private long fillDica(SQLiteDatabase db, long fkPergunta, String texto, double valorDeCompra, double latitude, double longitude, double raio){
+		ContentValues values = new ContentValues();
+		values.put(GameDbHelper.DICA_TEXTO, texto);
+		values.put(GameDbHelper.DICA_VALOR, valorDeCompra);
+		values.put(GameDbHelper.DICA_LATITUDE, latitude);
+		values.put(GameDbHelper.DICA_LONGITUDE, longitude);
+		values.put(GameDbHelper.DICA_RAIO, raio);
+		values.put(GameDbHelper.DICA_FK_PERGUNTA, fkPergunta);
+		return db.insert(GameDbHelper.TABLE_DICA, null, values);
+	}
+	
+	
+	private void fill(SQLiteDatabase db){
+		
+		Double raio = 3.0694775721281596E-4;
+		long fkTema = 0, fkPergunta = 0, fkPonto = 0, fkDica = 0;
+		
+		//inserindo tema
+		String nome = "Copa do Mundo 2014";
+		fkTema = fillTema(db, nome);
+		
+		//inserindo pergunta e ponto
+		nome = "Arena Fonte Nova";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -12.97883,-38.504371, raio);
+		
+		nome = "Arena Corinthians";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -23.545333,-46.473702, raio);
+		
+		nome = "Mané Garrincha";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -15.783519,-47.899211, raio);
+		
+		nome = "Estádio Mineirão";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -19.865867,-43.971132,raio);
+		
+		nome = "Estádio Maracanã";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -22.9127667,-43.2300316, raio);
+		
+		nome = "Estádio José do Rego Maciel";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -8.026699,-34.891111, raio);
+		
+		nome = "Villa Estádio Alvorada";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -3.08026,-60.034402, raio);
+		
+		nome = "Arena da Amazônia";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -3.0836637,-60.0279703, raio);
+		
+		nome = "Arena Pantanal";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -15.604017,-56.121632, raio);
+		
+		nome = "Estadio Beira Rio";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -30.0654729,-51.2358289, raio);
+		
+		nome = "Arena da Baixada";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -25.448212,-49.276987, raio);
+		
+		nome = "Estádio das Dunas";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -5.826827,-35.21243, raio);
+		
+		nome = "Estadio Castelão";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -3.807312,-38.522269, raio);
+		
+		
+		nome = "Arena da baixada";
+		fkPergunta = fillPergunta(db, fkTema, nome);
+		fkPonto = fillPonto(db, fkPergunta, nome, -25.448212,-49.276987, raio);
+		
+		//inserindo dicas
+		
+	}
 	
 	public GameDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -134,12 +240,14 @@ public class GameDbHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL(CREATE_TABLE_RANK_1);
-		db.execSQL(CREATE_TABLE_TEMA_2);
-		db.execSQL(CREATE_TABLE_PERGUNTA_3);
-		db.execSQL(CREATE_TABLE_JOGADOR_4);
-		db.execSQL(CREATE_TABLE_PONTO_5);
-		db.execSQL(CREATE_TABLE_DICA_6);
+		db.execSQL(CREATE_TABLE_RANK_1); //baixado da internet
+		db.execSQL(CREATE_TABLE_TEMA_2); // insert
+		db.execSQL(CREATE_TABLE_PERGUNTA_3); // insert
+		db.execSQL(CREATE_TABLE_JOGADOR_4); //baixado da internet ou cadastrado no dispositivo
+		db.execSQL(CREATE_TABLE_PONTO_5); // insert
+		db.execSQL(CREATE_TABLE_DICA_6); // insert
+		
+		fill(db);		
 	}
 
 	@Override
