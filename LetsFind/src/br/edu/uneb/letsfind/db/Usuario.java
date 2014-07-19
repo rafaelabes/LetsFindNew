@@ -3,21 +3,16 @@ package br.edu.uneb.letsfind.db;
 import java.util.Date;
 
 /* O jogador se relaciona a um tema */
-public class Jogador {
+public class Usuario {
 
 	private long id;
 	private String nomeDeUsuario;
 	private int pontuacao;
 	private double moedas;
-	/*
-	private String pais;
-	private String estado;
-	private String cidade;
-	*/
-	//private long fkTema;
+
 	private Date ultimaTentativa;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	public void setId(long id) {
@@ -41,27 +36,6 @@ public class Jogador {
 	public void setMoedas(double moedas) {
 		this.moedas = moedas;
 	}
-	
-	/*
-	public String getPais() {
-		return pais;
-	}
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	public String getCidade() {
-		return cidade;
-	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-	*/
 	
 	public Date getUltimaTentativa() {
 		return ultimaTentativa;

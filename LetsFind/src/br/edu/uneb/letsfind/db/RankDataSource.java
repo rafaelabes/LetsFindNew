@@ -12,7 +12,6 @@ public class RankDataSource {
 	private String[] allColumns = new String[]{
 			GameDbHelper.RANK_ID,
 			GameDbHelper.RANK_NOME,
-			GameDbHelper.RANK_MOEDAS,
 			GameDbHelper.RANK_PONTUACAO
 	};
 	
@@ -30,10 +29,8 @@ public class RankDataSource {
 	
 	public Rank cursorToRank(Cursor cursor){
 		Rank rank = new Rank();
-		rank.setId(cursor.getLong(0));
-		rank.setNomeDeUsuario(cursor.getString(1));
-		rank.setMoedas(cursor.getDouble(2));
-		rank.setPontuacao(cursor.getInt(3));
+		rank.setNomeDeUsuario(cursor.getString(0));
+		rank.setPontuacao(cursor.getInt(1));
 		return rank;
 	}
 	

@@ -22,7 +22,6 @@ public class GameDbHelper extends SQLiteOpenHelper {
 	private static final String CREATE_TABLE_RANK_1 = "CREATE TABLE " + TABLE_RANK + " ("+ 
 		    RANK_ID + "            INTEGER        PRIMARY KEY AUTOINCREMENT,"+
 		    RANK_NOME + " VARCHAR( 45 ),"+
-		    RANK_MOEDAS + "        REAL,"+
 		    RANK_PONTUACAO + "     INT"+
     ");";
 	
@@ -60,25 +59,25 @@ public class GameDbHelper extends SQLiteOpenHelper {
 	
 	/*tema confere */
 	
-	public static final String TABLE_JOGADOR = "jogador";
-	public static final String JOGADOR_ID = "id";
-	public static final String JOGADOR_NOME = "nomeDeUsuario";
-	public static final String JOGADOR_PONTUACAO = "pontuacao";
-	public static final String JOGADOR_MOEDAS = "moedas";
-	//public static final String JOGADOR_FK_TEMA = "tema";
-	public static final String JOGADOR_ULTIMA_TENTATIVA = "ultimaTentativa";
+	public static final String TABLE_USUARIO = "USUARIO";
+	public static final String USUARIO_ID = "id";
+	public static final String USUARIO_NOME = "nomeDeUsuario";
+	public static final String USUARIO_PONTUACAO = "pontuacao";
+	public static final String USUARIO_MOEDAS = "moedas";
+	//public static final String USUARIO_FK_TEMA = "tema";
+	public static final String USUARIO_ULTIMA_TENTATIVA = "ultimaTentativa";
 	
-	private static final String CREATE_TABLE_JOGADOR_4 = "CREATE TABLE " + TABLE_JOGADOR + " ("+
-			JOGADOR_ID + "             INTEGER        PRIMARY KEY AUTOINCREMENT,"+
-			JOGADOR_NOME + "   VARCHAR( 45 ),"+
-			JOGADOR_PONTUACAO + "       INTEGER,"+
-			JOGADOR_MOEDAS + "          REAL,"+
-			//JOGADOR_FK_TEMA + "            INTEGER        REFERENCES " + TABLE_TEMA + " ( id ),"+
-			JOGADOR_ULTIMA_TENTATIVA + " INTEGER"+
+	private static final String CREATE_TABLE_USUARIO_4 = "CREATE TABLE " + TABLE_USUARIO + " ("+
+			USUARIO_ID + "             INTEGER        PRIMARY KEY AUTOINCREMENT,"+
+			USUARIO_NOME + "   VARCHAR( 45 ),"+
+			USUARIO_PONTUACAO + "       INTEGER,"+
+			USUARIO_MOEDAS + "          REAL,"+
+			//USUARIO_FK_TEMA + "            INTEGER        REFERENCES " + TABLE_TEMA + " ( id ),"+
+			USUARIO_ULTIMA_TENTATIVA + " INTEGER"+
 	");";
 	
 	
-	/* jogador confere
+	/* USUARIO confere
 	 * ultima tentativa esta como integer mas sera uma data: o timestamp de uma data
 	 * 
 	 * */
@@ -243,7 +242,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_RANK_1); //baixado da internet
 		db.execSQL(CREATE_TABLE_TEMA_2); // insert
 		db.execSQL(CREATE_TABLE_PERGUNTA_3); // insert
-		db.execSQL(CREATE_TABLE_JOGADOR_4); //baixado da internet ou cadastrado no dispositivo
+		db.execSQL(CREATE_TABLE_USUARIO_4); //baixado da internet ou cadastrado no dispositivo
 		db.execSQL(CREATE_TABLE_PONTO_5); // insert
 		db.execSQL(CREATE_TABLE_DICA_6); // insert
 		
@@ -256,7 +255,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		//db.execSQL("PRAGMA foreign_keys = OFF;");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_DICA);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PONTO);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_JOGADOR);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USUARIO);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERGUNTA);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEMA);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_RANK);
