@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
 						String iname = (String) innerObj.get("name");
 						String iponts = (String) innerObj.get("ponts");
 
-						Log.v("app",iorder + " / " + iname + " / " + iponts);
+						Log.v("app", iorder + " / " + iname + " / " + iponts);
 
 					}
 

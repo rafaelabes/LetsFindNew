@@ -114,8 +114,7 @@ public class PontoTuristicoDataSource {
 		return cursor.getLong(0);
 		
 	}
-	
-	
+		
 	public List<PontoTuristico> getPontoTuristicoByPergunta(Pergunta pergunta){
 		List<PontoTuristico> pontosTuristicos = new ArrayList<PontoTuristico>();
 		
@@ -138,6 +137,38 @@ public class PontoTuristicoDataSource {
 		cursor.close();
 		
 		return pontosTuristicos;
+	}
+	
+	public PontoTuristico getPontoTuristicoByNome(String nome){
+		
+		Cursor cursor = database.query(GameDbHelper.TABLE_PONTO,
+				allColumns,
+				GameDbHelper.PONTO_NOME + " = ?",
+				new String[]{ nome }, null, null, null);
+		
+		cursor.moveToFirst();
+		PontoTuristico pontoTuristico = cursorToPontoTuristico(cursor);
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return pontoTuristico;
+	}
+	
+	public PontoTuristico getPontoTuristicoById(Long id){
+		
+		Cursor cursor = database.query(GameDbHelper.TABLE_PONTO,
+				allColumns,
+				GameDbHelper.PONTO_NOME + " = ?",
+				new String[]{ id.toString() }, null, null, null);
+		
+		cursor.moveToFirst();
+		PontoTuristico pontoTuristico = cursorToPontoTuristico(cursor);
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return pontoTuristico;
 	}
 	
 }

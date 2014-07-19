@@ -30,6 +30,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,9 +54,12 @@ public class MapaFragment extends Fragment {
 	
 	private final LatLng BRASIL = new LatLng(-13.921117774841237, -54.58670552819967);
 	
+	MediaPlayer mp = null;
 	
 	
     public MapaFragment() {
+    	
+    	//TODO: asdf
     	
     }
 
@@ -101,6 +105,7 @@ public class MapaFragment extends Fragment {
 	        t.setId(1);
 	        
 	        ///*
+	        
 	        List<Pergunta> perguntas = pergDS.getPerguntasByTema(t);
 	        
 	        Iterator<Pergunta> it1 = perguntas.iterator();
@@ -161,11 +166,38 @@ public class MapaFragment extends Fragment {
 
 	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
 	    	            
-	    	            if((zoom >= 18) && (Geometry.isPointInCircle(FAROL_DA_BARRA.latitude, FAROL_DA_BARRA.longitude, raio, point.latitude, point.longitude))){
-	    	            	//o usuario pode clicar no mapa a partir do zoom 18
-	    	            	showFoundDialog(getActivity());
-	    	            }
 	    	            
+	    	            if(zoom >= 18){
+	    	            		if(Geometry.isPointInCircle(
+	    	            				FAROL_DA_BARRA.latitude,
+	    	            				FAROL_DA_BARRA.longitude,
+	    	            				raio,
+	    	            				point.latitude,
+	    	            				point.longitude)){
+	    	            			
+					    	        //o usuario pode clicar no mapa a partir do zoom 18
+	    	            			showFoundDialog(getActivity());
+	    	            			
+	    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
+	    	            			mp.start();
+	    	            			
+	    	            			
+	    	            		}
+	    	            		else{
+	    	            			showNotFoundDialog(getActivity());
+	    	            			
+	    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
+	    	            			mp.start();
+	    	            			
+	    	            		}
+	    	            }
+	    	            else{
+	    	            	showClickDeniedDialog(getActivity());
+	    	            	
+	    	            	mp = MediaPlayer.create(getActivity(), R.raw.ding);
+	    	        		mp.start();
+	    	            	
+	    	            	}
 	    	        }
 	    	        
 	    		});
@@ -202,16 +234,66 @@ public class MapaFragment extends Fragment {
 		// custom dialog
 		final Dialog dialog = new Dialog(context);
 		dialog.setContentView(R.layout.dialog_found);
-		dialog.setTitle("Title...");
+		dialog.setTitle(R.string.Success);
  
 			// set the custom dialog components - text, image and button
 		TextView text = (TextView) dialog.findViewById(R.id.text);
-		text.setText("Parabens! Você acertou");
+		text.setText(R.string.Congratulations);
 		
-		ImageView image = (ImageView) dialog.findViewById(R.id.dialogFoundImage);
+		ImageView image = (ImageView) dialog.findViewById(R.id.foundImage);
 		image.setImageResource(R.drawable.ic_launcher);
  
-		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		Button closeButton = (Button) dialog.findViewById(R.id.closeButton);
+			// if button is clicked, close the custom dialog
+		
+		closeButton.setText(R.string.Close);
+			
+		closeButton.setOnClickListener(new View.OnClickListener() {
+				
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		
+		Button detailsButton = (Button) dialog.findViewById(R.id.detailsButton);
+		// if button is clicked, close the custom dialog
+		
+		detailsButton.setText(R.string.ShowDetails);
+		
+		detailsButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+ 
+		dialog.show();
+		
+	}
+	
+	
+	public void showNotFoundDialog(Context context){
+		
+		if(context == null){
+			Log.wtf("showFoundDialog", "context is null");
+			return;
+		}
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(context);
+		dialog.setContentView(R.layout.dialog_not_found);
+		dialog.setTitle(R.string.Error);
+ 
+			// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		text.setText(R.string.YouFailed);
+		
+		ImageView image = (ImageView) dialog.findViewById(R.id.notFoundImage);
+		image.setImageResource(R.drawable.ic_launcher);
+ 
+		Button dialogButton = (Button) dialog.findViewById(R.id.closeButton);
 			// if button is clicked, close the custom dialog
 			
 		dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -225,5 +307,41 @@ public class MapaFragment extends Fragment {
 		dialog.show();
 		
 	}
+	
+	
+	public void showClickDeniedDialog(Context context){
+		
+		if(context == null){
+			Log.wtf("showFoundDialog", "context is null");
+			return;
+		}
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(context);
+		dialog.setContentView(R.layout.dialog_click_denied);
+		dialog.setTitle(R.string.GameRules);
+ 
+			// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		text.setText(R.string.DeniedZoomLevel);
+		
+		ImageView image = (ImageView) dialog.findViewById(R.id.deniedImage);
+		image.setImageResource(R.drawable.ic_launcher);
+ 
+		Button closeButton = (Button) dialog.findViewById(R.id.closeButton);
+			// if button is clicked, close the custom dialog
+			
+		closeButton.setOnClickListener(new View.OnClickListener() {
+				
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+ 
+		dialog.show();
+		
+	}
+	
     
 }

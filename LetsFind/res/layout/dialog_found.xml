@@ -4,7 +4,8 @@
     android:layout_height="match_parent" >
     
     <ImageView
-        android:id="@+id/dialogFoundImage"
+        android:contentDescription="@string/Success"
+        android:id="@+id/foundImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp" />
@@ -13,17 +14,27 @@
         android:id="@+id/text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFF" 
-        android:layout_toRightOf="@+id/dialogFoundImage"/>/>
+        android:layout_toRightOf="@+id/foundImage"/>
  
      <Button
-        android:id="@+id/dialogButtonOK"
-        android:layout_width="100px"
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Ok "
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_below="@+id/dialogFoundImage"
+        android:layout_below="@+id/foundImage"
+        android:text="@string/Close"
         />
+
+     <Button
+         android:id="@+id/detailsButton"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/closeButton"
+         android:layout_alignBottom="@+id/closeButton"
+         android:layout_marginLeft="5dp"
+         android:layout_toRightOf="@+id/closeButton"
+         android:text="@string/ShowDetails"
+      />
 
 </RelativeLayout>

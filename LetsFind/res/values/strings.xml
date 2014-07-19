@@ -9,10 +9,14 @@
     <string name="Coins">Moedas</string>
     <string name="title_activity_mapa">Encontre os pontos solicitados</string>
     <string name="valor_moedas">$ 256</string>
-    
-    
-    
-    
-    
+    <string name="Close">Fechar</string>
+    <string name="ShowDetails">Mostrar Detalhes</string>
+    <string name="NotFound">Não Encontrado</string>
+    <string name="Success">Sucesso</string>
+    <string name="YouFailed">Você errou</string>
+    <string name="Congratulations">Parabens, Você Acertou!</string>
+    <string name="Error">Erro</string>
+    <string name="DeniedZoomLevel">Você não pode selecionar um local nesse nível de zoom,\n por favor aumente o zoom</string>
+    <string name="GameRules">Regras do Jogo</string>
 
 </resources>

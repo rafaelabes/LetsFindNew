@@ -52,12 +52,12 @@ public class PerguntaDataSource {
 		values.put(GameDbHelper.PERGUNTA_RESPONDIDA, respondida);
 		values.put(GameDbHelper.PERGUNTA_FK_TEMA, fkTema);
 		
-		long insertId = database.insert(GameDbHelper.TABLE_PERGUNTA, null, values);
+		Long insertId = database.insert(GameDbHelper.TABLE_PERGUNTA, null, values);
 		
 		Cursor cursor = database.query(GameDbHelper.TABLE_PERGUNTA,
 				allColumns,
-				GameDbHelper.PERGUNTA_ID + " = " + insertId,
-				null, null, null, null);
+				GameDbHelper.PERGUNTA_ID + " = ?",
+				new String[]{ insertId.toString() }, null, null, null);
 		
 		cursor.moveToFirst();
 		Pergunta pergunta = cursorToPergunta(cursor);
@@ -78,13 +78,13 @@ public class PerguntaDataSource {
 	//
 	public List<Pergunta> getPerguntasByTema(Tema tema){
 		
-		long fkTema = tema.getId();
-		List<Pergunta> perguntas = new ArrayList<Pergunta>();	
+		Long fkTema = tema.getId();
+		List<Pergunta> perguntas = new ArrayList<Pergunta>();
 		
 		Cursor cursor = database.query(GameDbHelper.TABLE_PERGUNTA,
 				allColumns,
-				GameDbHelper.PERGUNTA_FK_TEMA + " = " + fkTema,
-				null, null, null, null);
+				GameDbHelper.PERGUNTA_FK_TEMA + " = ?",
+				new String[]{ fkTema.toString() }, null, null, null);
 		
 		cursor.moveToFirst();
 		
@@ -107,5 +107,41 @@ public class PerguntaDataSource {
 		return cursor.getInt(0);
 		
 	}
+	
+	
+	public Pergunta getPerguntaByTexto(String texto){
+		
+		Cursor cursor = database.query(GameDbHelper.TABLE_PERGUNTA,
+				allColumns,
+				GameDbHelper.PERGUNTA_TEXTO + " = ?",
+				new String[]{ texto }, null, null, null);
+		
+		
+		cursor.moveToFirst();
+		Pergunta pergunta = cursorToPergunta(cursor);
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return pergunta;
+	}
+	
+	public Pergunta getPerguntaById(Long id){
+		
+		Cursor cursor = database.query(GameDbHelper.TABLE_PERGUNTA,
+				allColumns,
+				GameDbHelper.PERGUNTA_ID + " = ?",
+				new String[]{ id.toString() }, null, null, null);
+		
+		
+		cursor.moveToFirst();
+		Pergunta pergunta = cursorToPergunta(cursor);
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return pergunta;
+	}
+	
 	
 }
