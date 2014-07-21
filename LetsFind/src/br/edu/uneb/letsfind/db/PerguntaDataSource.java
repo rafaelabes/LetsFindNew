@@ -100,6 +100,45 @@ public class PerguntaDataSource {
 		return perguntas;
 	}
 	
+	public Pergunta getPerguntaAfterId(long temaId, long id){
+		
+		Pergunta pergunta = null;
+		/*
+		Cursor cursor = database.query(GameDbHelper.TABLE_PERGUNTA,
+				allColumns,
+				GameDbHelper.PERGUNTA_FK_TEMA + " = ?"
+						+ " AND "
+				+ GameDbHelper.PERGUNTA_ID + " > ? ",
+				new String[]{ String.valueOf(temaId), String.valueOf(id) }
+		, null, null, null);
+		*/
+		
+		Cursor cursor = database.rawQuery("select "
+				+ GameDbHelper.PERGUNTA_ID + ", "
+				+ GameDbHelper.PERGUNTA_TEXTO + ", "
+				+ GameDbHelper.PERGUNTA_RESPONDIDA + ", "
+				+ GameDbHelper.PERGUNTA_FK_TEMA + " "
+				+ " from "
+				+ GameDbHelper.TABLE_PERGUNTA +" "
+						+ " where "
+						+ GameDbHelper.PERGUNTA_FK_TEMA + " = ?"
+						+ " AND "
+						+ GameDbHelper.PERGUNTA_ID +" > ? LIMIT 1", new String[]{ String.valueOf(temaId), String.valueOf(id) });
+		
+		
+		cursor.moveToFirst();
+		
+		while(!cursor.isAfterLast()){
+			pergunta = cursorToPergunta(cursor);
+		}
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return pergunta;
+	}
+	
+	
 	
 	public int getCount(){
 				

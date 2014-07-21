@@ -59,11 +59,25 @@ public class MapaFragment extends Fragment {
 	
 	MediaPlayer mp = null;
 	
+	private long temaId;
+	private long perguntaId;
+	private Pergunta pergunta;
+	private List<PontoTuristico> pontos;
+	private PerguntaDataSource pergDS;
+	private PontoTuristicoDataSource pontoDS;
+	private UsuarioDataSource usuarioDS;
+	
+	TextView textPergunta;
+	TextView textPontos;
+	TextView textMoedas;
+	Button buttonSobre;
+	Usuario usuario;
+
 	
     public MapaFragment() {
     	
     	//TODO: asdf
-    	
+    	perguntaId = 0;
     }
 
     @Override
@@ -87,57 +101,88 @@ public class MapaFragment extends Fragment {
 	        
 	        if(map != null){
 	        
+	        		
+	        	textPergunta = (TextView) getView().findViewById(R.id.textPergunta);
+	        	textPontos = (TextView) getView().findViewById(R.id.textPontos);
+	        	textMoedas = (TextView) getView().findViewById(R.id.textMoedas);
+	        	buttonSobre = (Button) getView().findViewById(R.id.buttonSobre);
+	        	
+	        	
 	        	/*
 	        	map.addMarker(new MarkerOptions().position(
         				new LatLng(-12.97883, -38.504371)
         		));
 	        	*/
 	        	
-	        	ContainsTema ctema = (ContainsTema) getActivity();
-	        	long temaId = ctema.getTemaId();
-		        Tema t = new Tema();
-		        t.setId(temaId);
+	        	//ContainsTema ctema = (ContainsTema) getActivity();
+	        	//temaId = ctema.getTemaId();
 	        	
 	        	//Log.wtf("TemaID", String.valueOf(temaId));
 	        	
 	        //map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
 	        
 	        	
-	        
-	        PerguntaDataSource pergDS = new PerguntaDataSource(getActivity());
-	        pergDS.open();
-	        
-	        PontoTuristicoDataSource pontoDS = new PontoTuristicoDataSource(getActivity());
-	        pontoDS.open();
-	        
-	        
-	        ///*
-	        
-	        List<Pergunta> perguntas = pergDS.getPerguntasByTema(t);
-	        
-	        Iterator<Pergunta> it1 = perguntas.iterator();
-	        while(it1.hasNext()){
-	        	Pergunta pergunta = it1.next();
+    			
+	        	//usuarioDS = new UsuarioDataSource(getActivity());
 	        	
-	        	List<PontoTuristico> pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
+    			//Se nao encontrar um usuario, criar um;
+	        	/*
+    			if(usuario == null){
+    				
+        			usuarioDS.open();            			
+        			
+        			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
+        			
+        			if(usuarios.size() > 0){
+        				usuario = usuarios.get(0);
+        			}
+    				
+    				usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
+    				usuarioDS.close();
+    			}
+    			*/
+	            
 	        	
+	        	/*
+		        pergDS = new PerguntaDataSource(getActivity());
+		        pergDS.open();
+		        pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
+		        
+            	//alterar o id
+            	perguntaId = pergunta.getId();
+            	if(perguntaId == pergDS.getCount()){
+            		perguntaId = 0;
+            	}
+            	*/
+            	//pergDS.close();
+            	
+            	if(textPergunta != null)
+            	textPergunta.setText("Encontre o Farol da Barra");
+	        
+	        
+
+	        
+	        /*
+	        
+	        	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
 	        	Iterator<PontoTuristico> it2 = pontos.iterator();
 	        	
 	        	while(it2.hasNext()){
 	        		
 	        		PontoTuristico ponto = it2.next();
-	        		
+
 	        		Log.v("Lat", String.valueOf(ponto.getLatitude()));
 	        		Log.v("Long", String.valueOf(ponto.getLongitude()));
+	        		
 	        		
 	        		map.addMarker(new MarkerOptions().position(
 	        				new LatLng(ponto.getLatitude(), ponto.getLongitude())
 	        		));
+	        		
 	        	}
-	        }
+
 	        //*/
-	        pergDS.close();
-	        pontoDS.close();
+
 	        
 	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
@@ -151,6 +196,10 @@ public class MapaFragment extends Fragment {
 
 	    	        @Override
 	    	        public void onMapClick(LatLng point) {
+	    	        	
+	    	        	//pergDS.open();
+	    	        	pontoDS = new PontoTuristicoDataSource(getActivity());
+	    	        	pontoDS.open();
 	    	        	
 	    	        	MarkerOptions mo = new MarkerOptions();
 	    	        	mo.position(point);
@@ -170,56 +219,62 @@ public class MapaFragment extends Fragment {
 	    	            
 	    	            
 	    	            
-	    	            UsuarioDataSource usuarioDS = new UsuarioDataSource(getActivity());
-            			usuarioDS.open();	    	            			
-            			
-            			
-            			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
-            			Usuario usuario = null;
-            			
-            			
-            			if(usuarios.size() > 0){
-            				usuario = usuarios.get(0);
-            			}
-            			
-            			//Se nao encontrar um usuario, criar um;
-            			if(usuario == null){
-            				usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
-            			}
-	    	            
-	    	            
-	    	            
 	    	            if(zoom >= 18){
-	    	            		if(Geometry.isPointInCircle(
-	    	            				FAROL_DA_BARRA.latitude,
-	    	            				FAROL_DA_BARRA.longitude,
-	    	            				raio,
-	    	            				point.latitude,
-	    	            				point.longitude)){
-	    	            			
-					    	        //o usuario pode clicar no mapa a partir do zoom 18
-	    	            			showFoundDialog(getActivity());
-	    	            			
-	    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
-	    	            			mp.start();
+	    	            	
+	    	            	/*
+	    	            	pontoDS.open();
+	    	            	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
+	    	            	pontoDS.close();
+	    		        	Iterator<PontoTuristico> it2 = pontos.iterator();
+	    		        	
+	    		        	while(it2.hasNext()){
+	    		        		PontoTuristico ponto = it2.next();
+	    		        	}// while
+	    	            	
+	    	            	pergDS.open();
+	            			pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
+	            			pergDS.close();
+	            			
+	                    	//alterar o id
+	                    	perguntaId = pergunta.getId();
+	                    	if(perguntaId == pergDS.getCount()){
+	                    		perguntaId = 0;
+	                    	}
+	    		        	*/
+	                    	
+	                    	if(Geometry.isPointInCircle(
+    		        				FAROL_DA_BARRA.latitude,
+    		        				FAROL_DA_BARRA.longitude,
+    	            				raio,
+    	            				point.latitude,
+    	            				point.longitude)){
+    	            			
+				    	        //o usuario pode clicar no mapa a partir do zoom 18
+    	            			showFoundDialog(getActivity());
+    	            			
+    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
+    	            			mp.start();
 
-	    	            			//atualiza a pontuação
-	    	            			usuario.setAcertos(usuario.getAcertos() + 1);
-	    	            			usuario.setUltimaTentativa(new Date());
-	    	            			
-	    	            			
-	    	            		}
-	    	            		else{
-	    	            			
-	    	            			usuario.setErros(usuario.getErros() + 1);
-	    	            			
-	    	            			showNotFoundDialog(getActivity());
-	    	            			
-	    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
-	    	            			mp.start();
-	    	            			
-	    	            		}
-	    	            }
+    	            			//atualiza a pontuação
+    	            			usuario.setAcertos(usuario.getAcertos() + 1);
+    	            			usuario.setUltimaTentativa(new Date());
+    	            			
+    	            			
+    	            		}
+    	            		else{
+    	            			
+    	            			usuario.setErros(usuario.getErros() + 1);
+    	            			
+    	            			showNotFoundDialog(getActivity());
+    	            			
+    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
+    	            			mp.start();
+    	            			
+    	            		} //if
+
+	                    	
+	    	            		
+	    	            } // if zoom
 	    	            else{
 	    	            	showClickDeniedDialog(getActivity());
 	    	            	
@@ -230,8 +285,14 @@ public class MapaFragment extends Fragment {
 	    	            
 	    	            
             			//salva no banco
+	    	            /*
+	    	            usuarioDS.open();
             			usuarioDS.updateUsuario(usuario);
             			usuarioDS.close();
+            			*/
+            			
+            			//pergDS.close();
+            			//pontoDS.close();
 	    	        }
 	    	        
 	    		});

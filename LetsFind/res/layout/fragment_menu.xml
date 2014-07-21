@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="top"
-    android:background="@drawable/bg3"
+    android:background="@drawable/interna"
     android:gravity="center|fill_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -43,20 +43,13 @@
         android:gravity="center"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="189dp"
-            android:layout_weight="0.66"
-            android:src="@drawable/logo" />
-
         <Button
             android:id="@+id/buttonJogar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
-            android:background="#363636"
+            android:background="#8B0000"
             android:text="@string/Play"
             android:textColor="#ffffff"
             android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
@@ -66,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            android:background="#363636"
+            android:background="#8B0000"
             android:text="@string/About"
             android:textColor="#ffffff"
             android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
@@ -76,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            android:background="#363636"
+            android:background="#8B0000"
             android:text="@string/Ranking"
             android:textColor="#ffffff"
             android:width="@dimen/abc_action_bar_stacked_tab_max_width" />
@@ -86,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            android:background="#363636"
+            android:background="#8B0000"
             android:text="@string/Market"
             android:textColor="#ffffff"
             android:width="@dimen/abc_action_bar_stacked_tab_max_width" />

@@ -19,7 +19,7 @@
             android:src="@drawable/path2995" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textPergunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" &quot;ARENA ITAIPAVA FONTE NOVA&quot;"
@@ -57,6 +57,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/textMoedas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top|left"
@@ -69,7 +70,7 @@
                 android:src="@drawable/estrela" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textPontos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="400" />
