@@ -18,5 +18,6 @@
     <string name="Error">Erro</string>
     <string name="DeniedZoomLevel">Você não pode selecionar um local nesse nível de zoom,\n por favor aumente o zoom</string>
     <string name="GameRules">Regras do Jogo</string>
+    <string name="ChooseATheme">Escolha um tema</string>
 
 </resources>

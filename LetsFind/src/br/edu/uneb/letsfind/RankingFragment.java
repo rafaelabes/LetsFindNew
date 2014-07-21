@@ -32,6 +32,10 @@ public class RankingFragment extends Fragment {
 		Button buttonMercado = (Button)getView().findViewById(R.id.buttonMercado);
 		*/
 		
+		//quando o usuario for visualizar o rank ele atualiza o banco online
+		//depois ele seleciona o rank dos "n" jogadores
+		
+		
 		
 	}
 

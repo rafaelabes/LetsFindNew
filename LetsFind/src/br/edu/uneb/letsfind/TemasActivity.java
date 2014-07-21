@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MapaActivity extends ActionBarActivity {
+public class TemasActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MapaActivity extends ActionBarActivity {
                     .commit();
             */
         	getSupportFragmentManager().beginTransaction()
-            .add(R.id.container, new MapaFragment())
+            .add(R.id.container, new TemasFragment())
             .commit();
             
         }

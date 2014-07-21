@@ -31,7 +31,7 @@ public class MercadoFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		ListView lista = (ListView) this.getView().findViewById(R.id.listView1);
-        MyArrayAdapter adapter = new MyArrayAdapter(getActivity().getApplicationContext(), FRUITS);
+        MercadoArrayAdapter adapter = new MercadoArrayAdapter(getActivity().getApplicationContext(), FRUITS);
         lista.setAdapter(adapter);
 		
 	}

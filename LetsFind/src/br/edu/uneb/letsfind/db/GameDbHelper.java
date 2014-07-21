@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class GameDbHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "letsfind.game.db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 	
 	public static final String TABLE_RANK = "rank";
 	public static final String RANK_ID = "id";
@@ -53,26 +53,22 @@ public class GameDbHelper extends SQLiteOpenHelper {
 			+ PERGUNTA_FK_TEMA + " INTEGER REFERENCES "+ TABLE_TEMA +" ( " + TEMA_ID + " )"
 			+ ")";
 	
-	
-	
-	
-	
 	/*tema confere */
 	
-	public static final String TABLE_USUARIO = "USUARIO";
+	public static final String TABLE_USUARIO = "usuario";
 	public static final String USUARIO_ID = "id";
 	public static final String USUARIO_NOME = "nomeDeUsuario";
-	public static final String USUARIO_PONTUACAO = "pontuacao";
+	public static final String USUARIO_ACERTOS = "acertos";
+	public static final String USUARIO_ERROS = "erros";
 	public static final String USUARIO_MOEDAS = "moedas";
-	//public static final String USUARIO_FK_TEMA = "tema";
 	public static final String USUARIO_ULTIMA_TENTATIVA = "ultimaTentativa";
 	
 	private static final String CREATE_TABLE_USUARIO_4 = "CREATE TABLE " + TABLE_USUARIO + " ("+
-			USUARIO_ID + "             INTEGER        PRIMARY KEY AUTOINCREMENT,"+
-			USUARIO_NOME + "   VARCHAR( 45 ),"+
-			USUARIO_PONTUACAO + "       INTEGER,"+
-			USUARIO_MOEDAS + "          REAL,"+
-			//USUARIO_FK_TEMA + "            INTEGER        REFERENCES " + TABLE_TEMA + " ( id ),"+
+			USUARIO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
+			USUARIO_NOME + " VARCHAR( 45 ),"+
+			USUARIO_ACERTOS + " INTEGER,"+
+			USUARIO_ERROS + " INTEGER,"+
+			USUARIO_MOEDAS + " REAL,"+
 			USUARIO_ULTIMA_TENTATIVA + " INTEGER"+
 	");";
 	
@@ -122,6 +118,24 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		    DICA_RAIO + " REAL, " +
 		    DICA_FK_PERGUNTA +" INTEGER REFERENCES " + TABLE_PERGUNTA + " ( " + PERGUNTA_ID + " )"+ 
     ");";
+	
+	
+	
+	public static final String TABLE_IMAGEM = "imagem";
+	public static final String IMAGEM_ID = "id";
+	public static final String IMAGEM_NOME = "nome";
+	public static final String IMAGEM_TITULO = "titulo";
+	public static final String IMAGEM_TIPO = "tipo";
+	public static final String IMAGEM_DADOS = "dados";
+	
+	private static final String CREATE_TABLE_IMAGEM_7 = "CREATE TABLE "+TABLE_IMAGEM+" ("+ 
+		    IMAGEM_ID + " INTEGER PRIMARY KEY, "+
+		    IMAGEM_NOME + " VARCHAR( 45 ), "+
+		    IMAGEM_TITULO + " VARCHAR( 45 ), "+
+		    IMAGEM_TIPO + " VARCHAR( 45 ), "+
+		    IMAGEM_DADOS + " BLOB "+ 
+    ");";
+	
 	
 	
 	/* enchendo os bancos */
@@ -245,7 +259,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_USUARIO_4); //baixado da internet ou cadastrado no dispositivo
 		db.execSQL(CREATE_TABLE_PONTO_5); // insert
 		db.execSQL(CREATE_TABLE_DICA_6); // insert
-		
+		db.execSQL(CREATE_TABLE_IMAGEM_7); // insert
 		fill(db);		
 	}
 

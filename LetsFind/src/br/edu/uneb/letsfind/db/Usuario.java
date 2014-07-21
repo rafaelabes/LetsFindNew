@@ -7,9 +7,9 @@ public class Usuario {
 
 	private long id;
 	private String nomeDeUsuario;
-	private int pontuacao;
+	private int acertos;
+	private int erros;
 	private double moedas;
-
 	private Date ultimaTentativa;
 	
 	public Long getId() {
@@ -24,11 +24,17 @@ public class Usuario {
 	public void setNomeDeUsuario(String nomeDeUsuario) {
 		this.nomeDeUsuario = nomeDeUsuario;
 	}
-	public int getPontuacao() {
-		return pontuacao;
+	public int getAcertos() {
+		return acertos;
 	}
-	public void setPontuacao(int pontuacao) {
-		this.pontuacao = pontuacao;
+	public void setAcertos(int acertos) {
+		this.acertos = acertos;
+	}
+	public int getErros() {
+		return erros;
+	}
+	public void setErros(int erros) {
+		this.erros = erros;
 	}
 	public double getMoedas() {
 		return moedas;

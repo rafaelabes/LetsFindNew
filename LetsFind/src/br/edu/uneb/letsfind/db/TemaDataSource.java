@@ -60,13 +60,13 @@ public class TemaDataSource {
 		
 	}
 	
-	void deleteTema(Tema tema){
+	public void deleteTema(Tema tema){
 		long id = tema.getId();
 		database.delete(GameDbHelper.TABLE_TEMA, GameDbHelper.TEMA_ID + " = " + id, null);
 	}
 	
 	
-	List<Tema> getAllTemas(){
+	public List<Tema> getAllTemas(){
 		List<Tema> temas = new ArrayList<Tema>();	
 		
 		Cursor cursor = database.query(GameDbHelper.TABLE_TEMA,

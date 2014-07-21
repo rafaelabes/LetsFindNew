@@ -1,5 +1,6 @@
 package br.edu.uneb.letsfind;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import br.edu.uneb.letsfind.db.PontoTuristico;
 import br.edu.uneb.letsfind.db.PontoTuristicoDataSource;
 import br.edu.uneb.letsfind.db.Tema;
 import br.edu.uneb.letsfind.db.TemaDataSource;
+import br.edu.uneb.letsfind.db.Usuario;
+import br.edu.uneb.letsfind.db.UsuarioDataSource;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -148,7 +151,6 @@ public class MapaFragment extends Fragment {
 	    	        @Override
 	    	        public void onMapClick(LatLng point) {
 	    	        	
-	    	        	
 	    	        	MarkerOptions mo = new MarkerOptions();
 	    	        	mo.position(point);
 	    	        	//mo.visible(false);
@@ -162,9 +164,28 @@ public class MapaFragment extends Fragment {
 	    	            Projection proj = map.getProjection();
 						Point xy = proj.toScreenLocation(point);
 						*/
-	    	            
 
 	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
+	    	            
+	    	            
+	    	            
+	    	            UsuarioDataSource usuarioDS = new UsuarioDataSource(getActivity());
+            			usuarioDS.open();	    	            			
+            			
+            			
+            			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
+            			Usuario usuario = null;
+            			
+            			
+            			if(usuarios.size() > 0){
+            				usuario = usuarios.get(0);
+            			}
+            			
+            			//Se nao encontrar um usuario, criar um;
+            			if(usuario == null){
+            				usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
+            			}
+	    	            
 	    	            
 	    	            
 	    	            if(zoom >= 18){
@@ -180,10 +201,17 @@ public class MapaFragment extends Fragment {
 	    	            			
 	    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
 	    	            			mp.start();
+
+	    	            			//atualiza a pontuação
+	    	            			usuario.setAcertos(usuario.getAcertos() + 1);
+	    	            			usuario.setUltimaTentativa(new Date());
 	    	            			
 	    	            			
 	    	            		}
 	    	            		else{
+	    	            			
+	    	            			usuario.setErros(usuario.getErros() + 1);
+	    	            			
 	    	            			showNotFoundDialog(getActivity());
 	    	            			
 	    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
@@ -198,6 +226,11 @@ public class MapaFragment extends Fragment {
 	    	        		mp.start();
 	    	            	
 	    	            	}
+	    	            
+	    	            
+            			//salva no banco
+            			usuarioDS.updateUsuario(usuario);
+            			usuarioDS.close();
 	    	        }
 	    	        
 	    		});

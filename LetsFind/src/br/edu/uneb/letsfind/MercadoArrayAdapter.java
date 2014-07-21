@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class MyArrayAdapter extends ArrayAdapter<String> {
+public class MercadoArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final String[] values;
  
-	public MyArrayAdapter (Context context, String[] values) {
-		super(context, R.layout.list_view, values);
+	public MercadoArrayAdapter (Context context, String[] values) {
+		super(context, R.layout.adapter_mercado, values);
 		this.context = context;
 		this.values = values;
 	}
@@ -22,7 +22,7 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
 		LayoutInflater inflater = (LayoutInflater) context
 			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
  
-		View rowView = inflater.inflate(R.layout.list_view, parent, false);
+		View rowView = inflater.inflate(R.layout.adapter_mercado, parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.label);
 		//ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
 		textView.setText(values[position]);
@@ -31,16 +31,6 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
 		String s = values[position];
  
 		System.out.println(s);
- 
-		/*if (s.equals("WindowsMobile")) {
-			imageView.setImageResource(R.drawable.windowsmobile_logo);
-		} else if (s.equals("iOS")) {
-			imageView.setImageResource(R.drawable.ios_logo);
-		} else if (s.equals("Blackberry")) {
-			imageView.setImageResource(R.drawable.blackberry_logo);
-		} else {
-			imageView.setImageResource(R.drawable.android_logo);
-		}*/
  
 		return rowView;
 	}

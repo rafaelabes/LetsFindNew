@@ -1,17 +1,23 @@
 package br.edu.uneb.letsfind;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uneb.letsfind.db.ImagemDataSource;
 import br.edu.uneb.letsfind.db.Pergunta;
 import br.edu.uneb.letsfind.db.PerguntaDataSource;
 import br.edu.uneb.letsfind.db.PontoTuristicoDataSource;
 import br.edu.uneb.letsfind.db.Tema;
 import br.edu.uneb.letsfind.db.TemaDataSource;
+import br.edu.uneb.letsfind.db.Usuario;
+import br.edu.uneb.letsfind.db.UsuarioDataSource;
 import br.edu.uneb.webclient.ResponseHandler;
 import br.edu.uneb.webclient.WebClient;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +30,10 @@ import android.view.MenuItem;
 
 
 
+
+
+import android.view.View;
+import android.widget.ImageView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -39,17 +49,47 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
         	
+        	TemasFragment temas = new TemasFragment();
         	getSupportFragmentManager().beginTransaction()
-            .add(R.id.container, new MenuFragment())
-            .commit();
+            .add(R.id.container, temas)
+            .commit(); 
             
         }
         
-        WebClient web = new WebClient(this, "naiara.tk", "/", "sample.json",
+        WebClient imageLoader = new WebClient(this, "naiara.tk", "/", "", 
+				new ResponseHandler() {
+				
+				@Override
+				public void execute(Context context, byte[] content) {
+					
+					ImagemDataSource imagem = new ImagemDataSource(context);
+					imagem.open();
+					
+					try{
+						imagem.createImagem(2L, "leona.png", "leona", "image/png", content);
+					}
+					catch(Exception ex){
+						Log.wtf("imageLoader", "Webclient erro ao carregar a imagem");
+						Log.wtf("imageLoader", "Webclient não aceita chuncked encode");
+					}
+					
+					imagem.close();
+				}
+			});
+			
+			List<NameValuePair> parametros = new ArrayList<NameValuePair>(1);
+	        parametros.add(new BasicNameValuePair("rt", "images/get/blob/1"));
+	        imageLoader.setParametros(parametros);
+	        imageLoader.setMethod(WebClient.BIN_GET);
+	        imageLoader.start();
+        
+        
+        /*
+        WebClient web = new WebClient(this.get, "naiara.tk", "/", "sample.json",
         new ResponseHandler() {
 			
 			@Override
-			public void execute(Context context, String content) {
+			public void execute(View view, String content) {
 				try {
 
 					JSONObject jsonObject = new JSONObject(content);
@@ -73,6 +113,7 @@ public class MainActivity extends ActionBarActivity {
 					e.printStackTrace();
 				}
 			}
+
 		});
         
         List<NameValuePair> parametros = new ArrayList<NameValuePair>(2);
@@ -82,6 +123,9 @@ public class MainActivity extends ActionBarActivity {
         
         //web.setMethod(WebClient.POST);
         web.start();
+        
+        */
+        
     }
 
 

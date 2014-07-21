@@ -1,5 +1,6 @@
 package br.edu.uneb.webclient;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -33,6 +35,7 @@ import br.edu.uneb.webclient.db.CookieDataSource;
 import android.content.Context;
 import android.preference.PreferenceActivity.Header;
 import android.util.Log;
+import android.view.View;
 
 
 public class WebClient extends Thread{
@@ -45,10 +48,13 @@ public class WebClient extends Thread{
 	private Context context = null;
 	private ResponseHandler responseHandler = null; 
 	
-	
+	//Pesquisar depois sobre esta classe
+	//CookieStore store;
 	
 	public static final int GET = 0;
 	public static final int POST = 1;
+	public static final int BIN_GET = 2;
+	public static final int BIN_POST = 3;
 	
 	private int method = GET;
 	
@@ -107,29 +113,42 @@ public class WebClient extends Thread{
 		cookies.open();
 		
 		String content;
+		byte[] data;
 		
-		if(this.method == GET){
-			
-			content = executeGet();	
-			
-		}else{
-						
-			content = executePost();
+		switch(this.method){
+		
+			case GET:
+				content = executeGet();
+				if(responseHandler != null)
+					responseHandler.execute(this.context, content);
+			break;
+			case POST:
+				content = executePost();
+				if(responseHandler != null)
+					responseHandler.execute(this.context, content);
+			break;
+			case BIN_GET:
+				data = executeBinaryGet();
+				if(responseHandler != null)
+					responseHandler.execute(this.context, data);
+			break;
+			case BIN_POST:
+				data = executeBinaryPost();
+				if(responseHandler != null)
+					responseHandler.execute(this.context, data);
+			break;
+		
 		}
-		
-		if(responseHandler != null)
-		responseHandler.execute(this.context, content);
 		
 	}
 
 
 
 	public String executeGet() {
+		
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
-		
 		UrlEncodedFormEntity par = null;
-		
 		HttpGet httpGet;
 		
 		try {
@@ -195,12 +214,11 @@ public class WebClient extends Thread{
 
 
 	public String executePost() {
+		
 		// Create a new HttpClient and Post Header
 		StringBuilder builder = new StringBuilder();
 		HttpClient httpclient = new DefaultHttpClient();
-		
 		String url = "http://"+ hostAddress + path+fileName;
-		
 		HttpPost httpPost = new HttpPost(url);
 
 		Log.v("POST URL", url);
@@ -243,7 +261,109 @@ public class WebClient extends Thread{
 		}
 		
 		return builder.toString();
-	} 
+	}
+	
+	
+	public byte[] executeBinaryGet() {
+		
+		HttpClient client = new DefaultHttpClient();
+		UrlEncodedFormEntity par = null;
+		HttpGet httpGet;
+		byte[] data = null;
+		
+		try {
+			
+			if(parametros != null)
+			par = new UrlEncodedFormEntity(parametros);
+			String url;
+			
+			
+			if(parametros != null){
+				url = "http://"+hostAddress+path+fileName+"?"+getStrParametros(par.getContent());
+			}
+			else{
+				url = "http://"+hostAddress+path+fileName;
+			}
+			
+			Log.v("GET URL", url);
+			
+			httpGet = new HttpGet(url);
+			
+			String scookies = cookies.toString();
+			if(!scookies.equals(""))
+				httpGet.setHeader("Cookie", cookies.toString());
+			
+			HttpResponse response = client.execute(httpGet);
+			InputStream is = response.getEntity().getContent();
+	        int contentSize = (int) response.getEntity().getContentLength();
+	        BufferedInputStream bis = new BufferedInputStream(is, 512);
+	         
+	        data = new byte[contentSize];
+	        int bytesRead = 0;
+	        int offset = 0;
+	         
+	        while (bytesRead != -1 && offset < contentSize) {
+	            bytesRead = bis.read(data, offset, contentSize - offset);
+	            offset += bytesRead;
+	        }
+		}
+		catch (Exception e) {
+			Log.e("WebClient.BinaryGet", Log.getStackTraceString(e));
+		}
+		
+		return data;
+	}
+	
+	
+	public byte[] executeBinaryPost() {
+		
+		HttpClient client = new DefaultHttpClient();
+		UrlEncodedFormEntity par = null;
+		HttpPost httpPost;
+		byte[] data = null;
+		
+		try {
+			
+			if(parametros != null)
+			par = new UrlEncodedFormEntity(parametros);
+			String url;
+			
+			
+			if(parametros != null){
+				url = "http://"+hostAddress+path+fileName+"?"+getStrParametros(par.getContent());
+			}
+			else{
+				url = "http://"+hostAddress+path+fileName;
+			}
+			
+			Log.v("GET URL", url);
+			
+			httpPost = new HttpPost(url);
+			
+			String scookies = cookies.toString();
+			if(!scookies.equals(""))
+				httpPost.setHeader("Cookie", cookies.toString());
+			
+			HttpResponse response = client.execute(httpPost);
+			InputStream is = response.getEntity().getContent();
+	        int contentSize = (int) response.getEntity().getContentLength();
+	        BufferedInputStream bis = new BufferedInputStream(is, 512);
+	         
+	        data = new byte[contentSize];
+	        int bytesRead = 0;
+	        int offset = 0;
+	         
+	        while (bytesRead != -1 && offset < contentSize) {
+	            bytesRead = bis.read(data, offset, contentSize - offset);
+	            offset += bytesRead;
+	        }
+		}
+		catch (Exception e) {
+			Log.e("WebClient.BinaryPost", Log.getStackTraceString(e));
+		}
+		
+		return data;
+	}
 
 
 }
