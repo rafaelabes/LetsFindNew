@@ -24,7 +24,7 @@ public class UsuarioDataSource {
 	};
 	
 	public UsuarioDataSource(Context context){
-		dbHelper = new GameDbHelper(context);
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 	
 	public UsuarioDataSource open() throws SQLException{

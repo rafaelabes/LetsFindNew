@@ -25,7 +25,7 @@ public class DicaDataSource {
 			GameDbHelper.DICA_FK_PERGUNTA };
 	
 	public DicaDataSource(Context context){
-		dbHelper = new GameDbHelper(context);
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 	
 	public void open() throws SQLException{

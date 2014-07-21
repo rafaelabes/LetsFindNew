@@ -49,7 +49,7 @@
                 android:src="@drawable/moedas" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textMoedas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$800" />
@@ -57,7 +57,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/textMoedas"
+            android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top|left"

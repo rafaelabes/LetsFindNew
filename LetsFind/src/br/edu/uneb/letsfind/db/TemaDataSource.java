@@ -21,7 +21,7 @@ public class TemaDataSource {
 	};
 	
 	public TemaDataSource(Context context){
-		dbHelper = new GameDbHelper(context);
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 
 	

@@ -10,6 +10,9 @@ import android.util.Log;
 /* SqliteUtil ou DbUtil  */
 public class CookieDbHelper extends SQLiteOpenHelper {
 
+	private static CookieDbHelper cookiesDbInstance = null;
+	private Context context;
+	
 	private static final String DATABASE_NAME = "letsfind.cookies.db";
 	private static final int DATABASE_VERSION = 1;
 	
@@ -43,9 +46,17 @@ public class CookieDbHelper extends SQLiteOpenHelper {
 	");";
 	
 	
-	public CookieDbHelper(Context context) {
+	private CookieDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.context = context;
 	}
+	
+	public static CookieDbHelper getInstance(Context ctx) {
+        if (cookiesDbInstance == null) {
+        	cookiesDbInstance = new CookieDbHelper(ctx.getApplicationContext());
+        }
+        return cookiesDbInstance;
+    }
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {

@@ -10,6 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 /* SqliteUtil ou DbUtil  */
 public class GameDbHelper extends SQLiteOpenHelper {
 
+	private static GameDbHelper gameDbInstance = null;
+	private Context context;
+	
 	private static final String DATABASE_NAME = "letsfind.game.db";
 	private static final int DATABASE_VERSION = 5;
 	
@@ -247,9 +250,17 @@ public class GameDbHelper extends SQLiteOpenHelper {
 		
 	}
 	
-	public GameDbHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-	}
+	private GameDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+    }
+	
+	public static GameDbHelper getInstance(Context ctx) {
+        if (gameDbInstance == null) {
+        	gameDbInstance = new GameDbHelper(ctx.getApplicationContext());
+        }
+        return gameDbInstance;
+    }
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {

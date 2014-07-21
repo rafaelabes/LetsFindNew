@@ -64,6 +64,11 @@
             android:name="br.edu.uneb.letsfind.LoginActivity"
             android:label="@string/title_activity_mapa" >
         </activity>
+        <activity
+            android:name="br.edu.uneb.letsfind.TemasActivity"
+            android:label="@string/title_activity_mapa" >
+        </activity>
+        
     </application>
 
 </manifest>

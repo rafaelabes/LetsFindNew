@@ -71,7 +71,7 @@ public class MapaFragment extends Fragment {
 	TextView textPontos;
 	TextView textMoedas;
 	Button buttonSobre;
-	Usuario usuario;
+	private Usuario usuario;
 
 	
     public MapaFragment() {
@@ -96,16 +96,33 @@ public class MapaFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
+		//O usuario é usado para atualizar os pontos
+		usuarioDS = new UsuarioDataSource(getActivity());
+    	if(usuario == null){
+			usuarioDS.open();            			
+			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
+			
+			if(usuarios.size() > 0){
+				usuario = usuarios.get(0);
+			}
+			
+			usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
+			//usuarioDS.close();
+		}
+		
+		
 		 map = ((SupportMapFragment) getFragmentManager()
 	                .findFragmentById(R.id.map)).getMap();
 	        
+		 
+		 
 	        if(map != null){
 	        
 	        		
-	        	textPergunta = (TextView) getView().findViewById(R.id.textPergunta);
-	        	textPontos = (TextView) getView().findViewById(R.id.textPontos);
-	        	textMoedas = (TextView) getView().findViewById(R.id.textMoedas);
-	        	buttonSobre = (Button) getView().findViewById(R.id.buttonSobre);
+	        	textPergunta = (TextView) view.findViewById(R.id.textPergunta);
+	        	textPontos = (TextView) view.findViewById(R.id.textPontos);
+	        	textMoedas = (TextView) view.findViewById(R.id.textMoedas);
+	        	buttonSobre = (Button) view.findViewById(R.id.buttonSobre);
 	        	
 	        	
 	        	/*
@@ -123,24 +140,7 @@ public class MapaFragment extends Fragment {
 	        
 	        	
     			
-	        	//usuarioDS = new UsuarioDataSource(getActivity());
 	        	
-    			//Se nao encontrar um usuario, criar um;
-	        	/*
-    			if(usuario == null){
-    				
-        			usuarioDS.open();            			
-        			
-        			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
-        			
-        			if(usuarios.size() > 0){
-        				usuario = usuarios.get(0);
-        			}
-    				
-    				usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
-    				usuarioDS.close();
-    			}
-    			*/
 	            
 	        	
 	        	/*
@@ -256,14 +256,16 @@ public class MapaFragment extends Fragment {
     	            			mp.start();
 
     	            			//atualiza a pontuação
+    	            			/*
     	            			usuario.setAcertos(usuario.getAcertos() + 1);
     	            			usuario.setUltimaTentativa(new Date());
+    	            			*/
     	            			
     	            			
     	            		}
     	            		else{
     	            			
-    	            			usuario.setErros(usuario.getErros() + 1);
+    	            			//usuario.setErros(usuario.getErros() + 1);
     	            			
     	            			showNotFoundDialog(getActivity());
     	            			
@@ -316,9 +318,6 @@ public class MapaFragment extends Fragment {
 	}
 	
 	
-	
-	//public void showNotFoundDialog(Context context){}
-	//public void showFoundDialog2(Context context){}
 	public void showFoundDialog(Context context){
 		
 		if(context == null){

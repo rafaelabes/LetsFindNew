@@ -23,7 +23,6 @@ public class AboutActivity extends ActionBarActivity {
             .add(R.id.container, new AboutFragment())
             .commit();
         	
-            
         }
         
     }

@@ -23,7 +23,7 @@ public class ImagemDataSource {
 	
 	
 	public ImagemDataSource(Context context){
-		dbHelper = new GameDbHelper(context);
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 	
 	public void open() throws SQLException{

@@ -15,6 +15,7 @@ import br.edu.uneb.letsfind.db.UsuarioDataSource;
 import br.edu.uneb.webclient.ResponseHandler;
 import br.edu.uneb.webclient.WebClient;
 import android.support.v7.app.ActionBarActivity;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,8 @@ import android.view.MenuItem;
 
 
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import org.apache.http.NameValuePair;
@@ -42,19 +45,25 @@ import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
 
-    @Override
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
         	
-        	TemasFragment temas = new TemasFragment();
         	getSupportFragmentManager().beginTransaction()
-            .add(R.id.container, temas)
-            .commit(); 
+            .add(R.id.container, new MenuFragment())
+            .commit();
             
         }
+        
         
         WebClient imageLoader = new WebClient(this, "naiara.tk", "/", "", 
 				new ResponseHandler() {
@@ -130,10 +139,6 @@ public class MainActivity extends ActionBarActivity {
         */
         
     }
-    
-    
-
-
     
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {

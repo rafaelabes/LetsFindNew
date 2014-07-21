@@ -1,6 +1,7 @@
 package br.edu.uneb.letsfind.db;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,8 +16,8 @@ public class RankDataSource {
 			GameDbHelper.RANK_PONTUACAO
 	};
 	
-	public RankDataSource(){
-		database = dbHelper.getWritableDatabase();
+	public RankDataSource(Context context){
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 	
 	public void open() throws SQLException{

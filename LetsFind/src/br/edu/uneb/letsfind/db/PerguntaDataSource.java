@@ -20,7 +20,7 @@ public class PerguntaDataSource {
 			GameDbHelper.PERGUNTA_FK_TEMA };
 	
 	public PerguntaDataSource(Context context){
-		dbHelper = new GameDbHelper(context);
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 	
 	public void open() throws SQLException{

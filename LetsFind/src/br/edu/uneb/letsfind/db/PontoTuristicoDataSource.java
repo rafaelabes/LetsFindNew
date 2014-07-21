@@ -23,7 +23,7 @@ public class PontoTuristicoDataSource {
 	};
 	
 	public PontoTuristicoDataSource(Context context){
-		dbHelper = new GameDbHelper(context);
+		dbHelper = GameDbHelper.getInstance(context);
 	}
 	
 	public void open() throws SQLException{

@@ -1,14 +1,9 @@
 package br.edu.uneb.letsfind;
 
-import java.util.List;
-
 import br.edu.uneb.letsfind.db.GameDbHelper;
-import br.edu.uneb.letsfind.db.Usuario;
-import br.edu.uneb.letsfind.db.UsuarioDataSource;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -30,7 +25,7 @@ public class MapaActivity extends ActionBarActivity implements ContainsTema {
         }
         
         Intent intent = getIntent();
-        tema = intent.getLongExtra(GameDbHelper.TABLE_TEMA, 0L);
+        tema = intent.getLongExtra(GameDbHelper.TABLE_TEMA, 1L);
         
     }
     

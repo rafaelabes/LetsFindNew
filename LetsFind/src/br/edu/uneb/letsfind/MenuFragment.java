@@ -41,7 +41,7 @@ public class MenuFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.v("MenuFragment","buttonJogar clicked");
-				Intent it = new Intent(getActivity(), MapaActivity.class);
+				Intent it = new Intent(getActivity(), TemasActivity.class);
 				startActivity(it);
 				
 			}

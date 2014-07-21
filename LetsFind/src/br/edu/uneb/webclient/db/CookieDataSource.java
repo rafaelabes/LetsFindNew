@@ -40,7 +40,7 @@ public class CookieDataSource {
 	}
 
 	public CookieDataSource(Context context){
-		dbHelper = new CookieDbHelper(context);
+		dbHelper = CookieDbHelper.getInstance(context);
 	}
 	
 	public void open() throws SQLException{
