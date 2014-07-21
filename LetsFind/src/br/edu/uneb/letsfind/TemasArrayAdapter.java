@@ -45,14 +45,14 @@ public class TemasArrayAdapter extends ArrayAdapter<Tema> {
 		
 		View rowView = inflater.inflate(R.layout.adapter_temas, parent, false);
 		ImageView imageView1 = (ImageView) rowView.findViewById(R.id.imageView1);
-		ImagemDataSource imagemDS = new ImagemDataSource(context);
-		imagemDS.open();
 		
 		//usando o id do tema como chave estrangeira para a imagem
-		Imagem imagem = imagemDS.getImagemById(tema.getId());
+		byte[] imagem = tema.getImagem();
+		
+		//Imagem imagem = null;
 		
 		if(imagem != null){
-			ByteArrayInputStream imageStream = new ByteArrayInputStream(imagem.getDados());
+			ByteArrayInputStream imageStream = new ByteArrayInputStream(imagem);
 			Bitmap theImage = BitmapFactory.decodeStream(imageStream);
 			imageView1.setImageBitmap(theImage);
 		}
@@ -60,7 +60,6 @@ public class TemasArrayAdapter extends ArrayAdapter<Tema> {
 			Log.wtf("Image", "A imagem é nula");
 		}
 		
-		imagemDS.close();
  
 		return rowView;
 	}

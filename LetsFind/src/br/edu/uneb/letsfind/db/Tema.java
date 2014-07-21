@@ -4,8 +4,10 @@ package br.edu.uneb.letsfind.db;
 /* Possui pontos turisticos */
 public class Tema {
 	
-	long id;
+	private long id;
 	private String nome;
+	private byte[] imagem;
+	
 	
 	public long getId() {
 		return id;
@@ -22,6 +24,13 @@ public class Tema {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
+	public byte[] getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
+	}
 	
 }

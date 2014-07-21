@@ -2,16 +2,20 @@ package br.edu.uneb.letsfind;
 
 import java.util.List;
 
+import br.edu.uneb.letsfind.db.GameDbHelper;
 import br.edu.uneb.letsfind.db.Usuario;
 import br.edu.uneb.letsfind.db.UsuarioDataSource;
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MapaActivity extends ActionBarActivity {
-
+public class MapaActivity extends ActionBarActivity implements ContainsTema {
+	
+	private long tema;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +23,14 @@ public class MapaActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
         	
-        	/*
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-            */
         	getSupportFragmentManager().beginTransaction()
             .add(R.id.container, new MapaFragment())
             .commit();
             
         }
+        
+        Intent intent = getIntent();
+        tema = intent.getLongExtra(GameDbHelper.TABLE_TEMA, 0L);
         
     }
     
@@ -51,6 +53,11 @@ public class MapaActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+	@Override
+	public long getTemaId() {
+		return tema;
+	}
     
     
 

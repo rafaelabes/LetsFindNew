@@ -93,6 +93,12 @@ public class MapaFragment extends Fragment {
         		));
 	        	*/
 	        	
+	        	ContainsTema ctema = (ContainsTema) getActivity();
+	        	long temaId = ctema.getTemaId();
+		        Tema t = new Tema();
+		        t.setId(temaId);
+	        	
+	        	//Log.wtf("TemaID", String.valueOf(temaId));
 	        	
 	        //map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
 	        
@@ -104,8 +110,6 @@ public class MapaFragment extends Fragment {
 	        PontoTuristicoDataSource pontoDS = new PontoTuristicoDataSource(getActivity());
 	        pontoDS.open();
 	        
-	        Tema t = new Tema();
-	        t.setId(1);
 	        
 	        ///*
 	        
@@ -134,9 +138,6 @@ public class MapaFragment extends Fragment {
 	        //*/
 	        pergDS.close();
 	        pontoDS.close();
-	        
-	        	
-	        
 	        
 	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);

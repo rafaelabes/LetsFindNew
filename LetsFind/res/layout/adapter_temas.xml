@@ -8,11 +8,10 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="96dp"
-            android:layout_height="75dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
             android:gravity="center|top"
-            android:src="@drawable/arena_fonte_nova"
-            />
+            android:src="@drawable/arena_fonte_nova" />
 
 </LinearLayout>

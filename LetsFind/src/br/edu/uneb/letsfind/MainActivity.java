@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
 					imagem.open();
 					
 					try{
-						imagem.createImagem(2L, "leona.png", "leona", "image/png", content);
+						imagem.createImagem(1L, "leona.png", "leona", "image/png", content);
 					}
 					catch(Exception ex){
 						Log.wtf("imageLoader", "Webclient erro ao carregar a imagem");
@@ -81,7 +81,10 @@ public class MainActivity extends ActionBarActivity {
 	        parametros.add(new BasicNameValuePair("rt", "images/get/blob/1"));
 	        imageLoader.setParametros(parametros);
 	        imageLoader.setMethod(WebClient.BIN_GET);
-	        imageLoader.start();
+	        
+	        
+	        //TODO: thread não usada
+	        //imageLoader.start();
         
         
         /*
@@ -127,9 +130,12 @@ public class MainActivity extends ActionBarActivity {
         */
         
     }
+    
+    
 
 
-    @Override
+    
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.

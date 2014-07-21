@@ -164,6 +164,27 @@ public class ImagemDataSource {
 	}
 	
 	
+	public byte[] getBinaryImageById(Long id){
+		
+		Cursor cursor = database.query(GameDbHelper.TABLE_IMAGEM,
+				new String[]{ GameDbHelper.IMAGEM_DADOS },
+				GameDbHelper.IMAGEM_ID + " = ?",
+				new String[]{ id.toString() }, null, null, null);
+		
+		cursor.moveToFirst();
+		byte[] imagem = null;
+		
+		while(!cursor.isAfterLast()){
+			imagem = cursor.getBlob(0);
+		}
+		
+		// make sure to close the cursor
+		cursor.close();
+		
+		return imagem;
+	}
+	
+	
 	
 	
 }
