@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DicaDataSource {
 
@@ -26,6 +27,11 @@ public class DicaDataSource {
 	
 	public DicaDataSource(Context context){
 		dbHelper = GameDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("DicaDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
 	}
 	
 	public void open() throws SQLException{

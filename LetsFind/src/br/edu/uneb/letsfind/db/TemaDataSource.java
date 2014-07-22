@@ -22,6 +22,11 @@ public class TemaDataSource {
 	
 	public TemaDataSource(Context context){
 		dbHelper = GameDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("TemaDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
 	}
 
 	

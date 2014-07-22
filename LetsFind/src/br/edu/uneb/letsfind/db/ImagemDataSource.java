@@ -24,6 +24,11 @@ public class ImagemDataSource {
 	
 	public ImagemDataSource(Context context){
 		dbHelper = GameDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("ImagemDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
 	}
 	
 	public void open() throws SQLException{

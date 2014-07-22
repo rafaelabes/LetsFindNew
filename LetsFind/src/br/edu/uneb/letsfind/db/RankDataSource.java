@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class RankDataSource {
 
@@ -18,6 +19,11 @@ public class RankDataSource {
 	
 	public RankDataSource(Context context){
 		dbHelper = GameDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("RankDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
 	}
 	
 	public void open() throws SQLException{

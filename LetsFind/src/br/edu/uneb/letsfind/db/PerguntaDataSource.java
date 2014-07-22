@@ -3,11 +3,13 @@ package br.edu.uneb.letsfind.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.UnusedStub;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class PerguntaDataSource {
 
@@ -21,10 +23,19 @@ public class PerguntaDataSource {
 	
 	public PerguntaDataSource(Context context){
 		dbHelper = GameDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("PerguntaDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
 	}
 	
 	public void open() throws SQLException{
 		database = dbHelper.getWritableDatabase();
+	}
+	
+	public void openRead() throws SQLException{
+		database = dbHelper.getReadableDatabase();
 	}
 	
 	public void close(){
@@ -113,23 +124,27 @@ public class PerguntaDataSource {
 		, null, null, null);
 		*/
 		
-		Cursor cursor = database.rawQuery("select "
-				+ GameDbHelper.PERGUNTA_ID + ", "
-				+ GameDbHelper.PERGUNTA_TEXTO + ", "
-				+ GameDbHelper.PERGUNTA_RESPONDIDA + ", "
-				+ GameDbHelper.PERGUNTA_FK_TEMA + " "
-				+ " from "
-				+ GameDbHelper.TABLE_PERGUNTA +" "
-						+ " where "
-						+ GameDbHelper.PERGUNTA_FK_TEMA + " = ?"
-						+ " AND "
-						+ GameDbHelper.PERGUNTA_ID +" > ? LIMIT 1", new String[]{ String.valueOf(temaId), String.valueOf(id) });
+		StringBuilder sb = new StringBuilder("select ")
+		.append(GameDbHelper.PERGUNTA_ID).append(", ")
+		.append(GameDbHelper.PERGUNTA_TEXTO).append(", ")
+		.append(GameDbHelper.PERGUNTA_RESPONDIDA).append(", ")
+		.append(GameDbHelper.PERGUNTA_FK_TEMA).append(" from ")
+		.append(GameDbHelper.TABLE_PERGUNTA).append(" where ")
+		.append(GameDbHelper.PERGUNTA_FK_TEMA).append(" = ? and ")
+		.append(GameDbHelper.PERGUNTA_ID).append(" > ? limit 1;");
+				
 		
+		Cursor cursor = database.rawQuery(sb.toString(), new String[]{ String.valueOf(temaId), String.valueOf(id) });
+		
+		
+		@SuppressWarnings("unused")
+		int xxxx = 0;
 		
 		cursor.moveToFirst();
 		
 		while(!cursor.isAfterLast()){
 			pergunta = cursorToPergunta(cursor);
+			cursor.moveToNext();
 		}
 		
 		// make sure to close the cursor

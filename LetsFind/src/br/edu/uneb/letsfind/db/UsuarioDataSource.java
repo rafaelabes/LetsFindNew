@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class UsuarioDataSource {
 
@@ -25,10 +26,21 @@ public class UsuarioDataSource {
 	
 	public UsuarioDataSource(Context context){
 		dbHelper = GameDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("UsuarioDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
+		
 	}
 	
 	public UsuarioDataSource open() throws SQLException{
 		database = dbHelper.getWritableDatabase();
+		return this;
+	}
+	
+	public UsuarioDataSource openRead() throws SQLException{
+		database = dbHelper.getReadableDatabase();
 		return this;
 	}
 	

@@ -110,8 +110,6 @@ public class WebClient extends Thread{
 
 	public void run(){
 		
-		cookies.open();
-		
 		String content;
 		byte[] data;
 		

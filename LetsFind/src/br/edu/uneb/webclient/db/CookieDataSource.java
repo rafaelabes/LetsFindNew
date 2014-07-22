@@ -41,6 +41,11 @@ public class CookieDataSource {
 
 	public CookieDataSource(Context context){
 		dbHelper = CookieDbHelper.getInstance(context);
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			Log.e("CookieDataSource", "Exception: "+Log.getStackTraceString(e));
+		}
 	}
 	
 	public void open() throws SQLException{

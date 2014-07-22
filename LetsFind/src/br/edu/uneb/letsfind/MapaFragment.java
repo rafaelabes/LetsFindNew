@@ -63,9 +63,7 @@ public class MapaFragment extends Fragment {
 	private long perguntaId;
 	private Pergunta pergunta;
 	private List<PontoTuristico> pontos;
-	private PerguntaDataSource pergDS;
 	private PontoTuristicoDataSource pontoDS;
-	private UsuarioDataSource usuarioDS;
 	
 	TextView textPergunta;
 	TextView textPontos;
@@ -78,13 +76,15 @@ public class MapaFragment extends Fragment {
     	
     	//TODO: asdf
     	perguntaId = 0;
+    	
+    	
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mapa, container, false);
-        
+                
         return rootView;
         
     }
@@ -97,9 +97,10 @@ public class MapaFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		//O usuario é usado para atualizar os pontos
-		usuarioDS = new UsuarioDataSource(getActivity());
     	if(usuario == null){
-			usuarioDS.open();            			
+    		
+    		UsuarioDataSource usuarioDS = new UsuarioDataSource(getActivity());
+    		
 			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
 			
 			if(usuarios.size() > 0){
@@ -111,18 +112,30 @@ public class MapaFragment extends Fragment {
 		}
 		
 		
+    	ContainsTema ctema = (ContainsTema) getActivity();
+    	temaId = ctema.getTemaId();
+    	
+    	Log.wtf("TemaID", String.valueOf(temaId));
+    	
+    	PerguntaDataSource pergDS = new PerguntaDataSource(getActivity());
+        pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
+        
+        Log.wtf("PerguntaId", String.valueOf(pergunta.getId()));
+    	
+    	
+    	
 		 map = ((SupportMapFragment) getFragmentManager()
 	                .findFragmentById(R.id.map)).getMap();
-	        
-		 
-		 
+	     
 	        if(map != null){
-	        
 	        		
 	        	textPergunta = (TextView) view.findViewById(R.id.textPergunta);
 	        	textPontos = (TextView) view.findViewById(R.id.textPontos);
 	        	textMoedas = (TextView) view.findViewById(R.id.textMoedas);
 	        	buttonSobre = (Button) view.findViewById(R.id.buttonSobre);
+	        	
+	        	
+	        	
 	        	
 	        	
 	        	/*
@@ -131,21 +144,14 @@ public class MapaFragment extends Fragment {
         		));
 	        	*/
 	        	
-	        	//ContainsTema ctema = (ContainsTema) getActivity();
-	        	//temaId = ctema.getTemaId();
-	        	
-	        	//Log.wtf("TemaID", String.valueOf(temaId));
+	   
 	        	
 	        //map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
 	        
 	        	
-    			
-	        	
-	            
-	        	
+		        
 	        	/*
 		        pergDS = new PerguntaDataSource(getActivity());
-		        pergDS.open();
 		        pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
 		        
             	//alterar o id
@@ -154,6 +160,7 @@ public class MapaFragment extends Fragment {
             		perguntaId = 0;
             	}
             	*/
+            	
             	//pergDS.close();
             	
             	if(textPergunta != null)
@@ -197,9 +204,7 @@ public class MapaFragment extends Fragment {
 	    	        @Override
 	    	        public void onMapClick(LatLng point) {
 	    	        	
-	    	        	//pergDS.open();
 	    	        	pontoDS = new PontoTuristicoDataSource(getActivity());
-	    	        	pontoDS.open();
 	    	        	
 	    	        	MarkerOptions mo = new MarkerOptions();
 	    	        	mo.position(point);
@@ -222,18 +227,26 @@ public class MapaFragment extends Fragment {
 	    	            if(zoom >= 18){
 	    	            	
 	    	            	/*
-	    	            	pontoDS.open();
 	    	            	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
-	    	            	pontoDS.close();
-	    		        	Iterator<PontoTuristico> it2 = pontos.iterator();
+	    	            	
+	    	            	Iterator<PontoTuristico> it2 = pontos.iterator();
 	    		        	
 	    		        	while(it2.hasNext()){
 	    		        		PontoTuristico ponto = it2.next();
+	    		        		
+	    		        		Log.wtf("pontoDSLat", String.valueOf(ponto.getLatitude()));
+	    		        		Log.wtf("pontoDSLong", String.valueOf(ponto.getLongitude()));
+	    		        		
 	    		        	}// while
 	    	            	
-	    	            	pergDS.open();
+	    	            	*/
+	    	            	
+	    	            	
+	    	            	/*
+	    	            	
+	    		        	
+	    	            	
 	            			pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
-	            			pergDS.close();
 	            			
 	                    	//alterar o id
 	                    	perguntaId = pergunta.getId();
@@ -288,13 +301,9 @@ public class MapaFragment extends Fragment {
 	    	            
             			//salva no banco
 	    	            /*
-	    	            usuarioDS.open();
             			usuarioDS.updateUsuario(usuario);
-            			usuarioDS.close();
             			*/
             			
-            			//pergDS.close();
-            			//pontoDS.close();
 	    	        }
 	    	        
 	    		});

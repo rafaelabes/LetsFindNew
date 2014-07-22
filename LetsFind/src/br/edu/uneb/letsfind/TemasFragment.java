@@ -44,10 +44,8 @@ public class TemasFragment extends Fragment {
 		GridView gvTemas = (GridView) getView().findViewById(R.id.gridView1);
 		
 		TemaDataSource temaDS = new TemaDataSource(getActivity());
-		temaDS.open();
 		
 		temas = temaDS.getAllTemas2();
-		temaDS.close();
 		
 		TemasArrayAdapter temasAdaper = new TemasArrayAdapter(getActivity(), temas);
 		gvTemas.setAdapter(temasAdaper);

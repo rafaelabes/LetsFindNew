@@ -72,7 +72,6 @@ public class MainActivity extends ActionBarActivity {
 				public void execute(Context context, byte[] content) {
 					
 					ImagemDataSource imagem = new ImagemDataSource(context);
-					imagem.open();
 					
 					try{
 						imagem.createImagem(1L, "leona.png", "leona", "image/png", content);
