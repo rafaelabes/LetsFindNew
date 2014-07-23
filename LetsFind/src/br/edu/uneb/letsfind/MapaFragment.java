@@ -64,20 +64,19 @@ public class MapaFragment extends Fragment {
 	private Pergunta pergunta;
 	private List<PontoTuristico> pontos;
 	private PontoTuristicoDataSource pontoDS;
+	private PerguntaDataSource pergDS;
+	private UsuarioDataSource usuarioDS;
+	
 	
 	TextView textPergunta;
 	TextView textPontos;
 	TextView textMoedas;
-	Button buttonSobre;
+	Button buttonDicas;
 	private Usuario usuario;
 
 	
     public MapaFragment() {
-    	
-    	//TODO: asdf
     	perguntaId = 0;
-    	
-    	
     }
 
     @Override
@@ -89,41 +88,39 @@ public class MapaFragment extends Fragment {
         
     }
     
+    private void fillUsuario0(){
+    	if(usuario == null){
+    		usuarioDS = new UsuarioDataSource(getActivity());
+			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
+			if(usuarios.size() > 0){
+				usuario = usuarios.get(0);
+			}
+			else{
+				usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
+			}
+		}
+    }
     
+    private void proximaPergunta1(){
+    	pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
+        perguntaId = pergunta.getId();
+        Log.wtf("PerguntaId", String.valueOf(perguntaId));
+    	if(perguntaId == pergDS.getCount()){
+    		perguntaId = 0;
+    	}
+
+    	if(textPergunta != null)
+    	textPergunta.setText(pergunta.getTexto());
+    	textPontos.setText(String.valueOf(usuario.getAcertos()));
+    	textMoedas.setText(String.valueOf(usuario.getMoedas()));
+    }
     
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		//O usuario é usado para atualizar os pontos
-    	if(usuario == null){
-    		
-    		UsuarioDataSource usuarioDS = new UsuarioDataSource(getActivity());
-    		
-			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
-			
-			if(usuarios.size() > 0){
-				usuario = usuarios.get(0);
-			}
-			
-			usuario = usuarioDS.createUsuario("Anonymous", 0, 0, 0);
-			//usuarioDS.close();
-		}
 		
-		
-    	ContainsTema ctema = (ContainsTema) getActivity();
-    	temaId = ctema.getTemaId();
-    	
-    	Log.wtf("TemaID", String.valueOf(temaId));
-    	
-    	PerguntaDataSource pergDS = new PerguntaDataSource(getActivity());
-        pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
-        
-        Log.wtf("PerguntaId", String.valueOf(pergunta.getId()));
-    	
-    	
-    	
 		 map = ((SupportMapFragment) getFragmentManager()
 	                .findFragmentById(R.id.map)).getMap();
 	     
@@ -132,12 +129,19 @@ public class MapaFragment extends Fragment {
 	        	textPergunta = (TextView) view.findViewById(R.id.textPergunta);
 	        	textPontos = (TextView) view.findViewById(R.id.textPontos);
 	        	textMoedas = (TextView) view.findViewById(R.id.textMoedas);
-	        	buttonSobre = (Button) view.findViewById(R.id.buttonSobre);
+	        	buttonDicas = (Button) view.findViewById(R.id.buttonDicas);
+	    
+	        	//O usuario é usado para atualizar os pontos
+	        	fillUsuario0();
+	    		
+	        	ContainsTema ctema = (ContainsTema) getActivity();
+	        	temaId = ctema.getTemaId();
+	        	Log.wtf("TemaID", String.valueOf(temaId));
 	        	
+	        	pergDS = new PerguntaDataSource(getActivity());
 	        	
-	        	
-	        	
-	        	
+	        	proximaPergunta1();
+	            
 	        	/*
 	        	map.addMarker(new MarkerOptions().position(
         				new LatLng(-12.97883, -38.504371)
@@ -163,8 +167,7 @@ public class MapaFragment extends Fragment {
             	
             	//pergDS.close();
             	
-            	if(textPergunta != null)
-            	textPergunta.setText("Encontre o Farol da Barra");
+
 	        
 	        
 
@@ -242,18 +245,22 @@ public class MapaFragment extends Fragment {
 	    	            	*/
 	    	            	
 	    	            	
+	    	            	
+	    	            	
 	    	            	/*
 	    	            	
-	    		        	
-	    	            	
-	            			pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
+	    		        	pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
 	            			
 	                    	//alterar o id
 	                    	perguntaId = pergunta.getId();
 	                    	if(perguntaId == pergDS.getCount()){
 	                    		perguntaId = 0;
 	                    	}
+	    	            	
+	            			
 	    		        	*/
+	    	            	
+	    	            	
 	                    	
 	                    	if(Geometry.isPointInCircle(
     		        				FAROL_DA_BARRA.latitude,
@@ -269,22 +276,19 @@ public class MapaFragment extends Fragment {
     	            			mp.start();
 
     	            			//atualiza a pontuação
-    	            			/*
     	            			usuario.setAcertos(usuario.getAcertos() + 1);
     	            			usuario.setUltimaTentativa(new Date());
-    	            			*/
     	            			
     	            			
     	            		}
     	            		else{
-    	            			
-    	            			//usuario.setErros(usuario.getErros() + 1);
+    	            			//atualiza erros
+    	            			usuario.setErros(usuario.getErros() + 1);
+    	            			usuario.setUltimaTentativa(new Date());
     	            			
     	            			showNotFoundDialog(getActivity());
-    	            			
     	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
     	            			mp.start();
-    	            			
     	            		} //if
 
 	                    	
@@ -300,9 +304,9 @@ public class MapaFragment extends Fragment {
 	    	            
 	    	            
             			//salva no banco
-	    	            /*
             			usuarioDS.updateUsuario(usuario);
-            			*/
+            			
+            			proximaPergunta1();
             			
 	    	        }
 	    	        

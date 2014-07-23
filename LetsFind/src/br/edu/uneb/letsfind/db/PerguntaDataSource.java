@@ -137,14 +137,10 @@ public class PerguntaDataSource {
 		Cursor cursor = database.rawQuery(sb.toString(), new String[]{ String.valueOf(temaId), String.valueOf(id) });
 		
 		
-		@SuppressWarnings("unused")
-		int xxxx = 0;
 		
 		cursor.moveToFirst();
-		
-		while(!cursor.isAfterLast()){
+		if(!cursor.isAfterLast()){
 			pergunta = cursorToPergunta(cursor);
-			cursor.moveToNext();
 		}
 		
 		// make sure to close the cursor
@@ -158,6 +154,7 @@ public class PerguntaDataSource {
 	public int getCount(){
 				
 		Cursor cursor = database.rawQuery("select count(*) from " + GameDbHelper.TABLE_PERGUNTA, null);
+		cursor.moveToFirst();
 		return cursor.getInt(0);
 		
 	}

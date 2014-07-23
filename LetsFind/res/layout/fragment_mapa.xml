@@ -78,7 +78,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonSobre"
+            android:id="@+id/buttonDicas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
