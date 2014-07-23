@@ -141,57 +141,6 @@ public class MapaFragment extends Fragment {
 	        	pergDS = new PerguntaDataSource(getActivity());
 	        	
 	        	proximaPergunta1();
-	            
-	        	/*
-	        	map.addMarker(new MarkerOptions().position(
-        				new LatLng(-12.97883, -38.504371)
-        		));
-	        	*/
-	        	
-	   
-	        	
-	        //map.addMarker(new MarkerOptions().position(FAROL_DA_BARRA));
-	        
-	        	
-		        
-	        	/*
-		        pergDS = new PerguntaDataSource(getActivity());
-		        pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
-		        
-            	//alterar o id
-            	perguntaId = pergunta.getId();
-            	if(perguntaId == pergDS.getCount()){
-            		perguntaId = 0;
-            	}
-            	*/
-            	
-            	//pergDS.close();
-            	
-
-	        
-	        
-
-	        
-	        /*
-	        
-	        	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
-	        	Iterator<PontoTuristico> it2 = pontos.iterator();
-	        	
-	        	while(it2.hasNext()){
-	        		
-	        		PontoTuristico ponto = it2.next();
-
-	        		Log.v("Lat", String.valueOf(ponto.getLatitude()));
-	        		Log.v("Long", String.valueOf(ponto.getLongitude()));
-	        		
-	        		
-	        		map.addMarker(new MarkerOptions().position(
-	        				new LatLng(ponto.getLatitude(), ponto.getLongitude())
-	        		));
-	        		
-	        	}
-
-	        //*/
 
 	        
 	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -229,7 +178,6 @@ public class MapaFragment extends Fragment {
 	    	            
 	    	            if(zoom >= 18){
 	    	            	
-	    	            	/*
 	    	            	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
 	    	            	
 	    	            	Iterator<PontoTuristico> it2 = pontos.iterator();
@@ -237,61 +185,38 @@ public class MapaFragment extends Fragment {
 	    		        	while(it2.hasNext()){
 	    		        		PontoTuristico ponto = it2.next();
 	    		        		
-	    		        		Log.wtf("pontoDSLat", String.valueOf(ponto.getLatitude()));
-	    		        		Log.wtf("pontoDSLong", String.valueOf(ponto.getLongitude()));
+	    		        		if(Geometry.isPointInCircle(
+	    		        				ponto.getLatitude(),
+	    		        				ponto.getLongitude(),
+	    	            				raio,
+	    	            				point.latitude,
+	    	            				point.longitude)){
+	    	            			
+					    	        //o usuario pode clicar no mapa a partir do zoom 18
+	    	            			showFoundDialog(getActivity());
+	    	            			
+	    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
+	    	            			mp.start();
+
+	    	            			//atualiza a pontuação
+	    	            			usuario.setAcertos(usuario.getAcertos() + 1);
+	    	            			usuario.setUltimaTentativa(new Date());
+	    	            			
+	    	            			
+	    	            		}
+	    	            		else{
+	    	            			//atualiza erros
+	    	            			usuario.setErros(usuario.getErros() + 1);
+	    	            			usuario.setUltimaTentativa(new Date());
+	    	            			
+	    	            			showNotFoundDialog(getActivity());
+	    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
+	    	            			mp.start();
+	    	            		} //if
+	    		        		
 	    		        		
 	    		        	}// while
 	    	            	
-	    	            	*/
-	    	            	
-	    	            	
-	    	            	
-	    	            	
-	    	            	/*
-	    	            	
-	    		        	pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
-	            			
-	                    	//alterar o id
-	                    	perguntaId = pergunta.getId();
-	                    	if(perguntaId == pergDS.getCount()){
-	                    		perguntaId = 0;
-	                    	}
-	    	            	
-	            			
-	    		        	*/
-	    	            	
-	    	            	
-	                    	
-	                    	if(Geometry.isPointInCircle(
-    		        				FAROL_DA_BARRA.latitude,
-    		        				FAROL_DA_BARRA.longitude,
-    	            				raio,
-    	            				point.latitude,
-    	            				point.longitude)){
-    	            			
-				    	        //o usuario pode clicar no mapa a partir do zoom 18
-    	            			showFoundDialog(getActivity());
-    	            			
-    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
-    	            			mp.start();
-
-    	            			//atualiza a pontuação
-    	            			usuario.setAcertos(usuario.getAcertos() + 1);
-    	            			usuario.setUltimaTentativa(new Date());
-    	            			
-    	            			
-    	            		}
-    	            		else{
-    	            			//atualiza erros
-    	            			usuario.setErros(usuario.getErros() + 1);
-    	            			usuario.setUltimaTentativa(new Date());
-    	            			
-    	            			showNotFoundDialog(getActivity());
-    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
-    	            			mp.start();
-    	            		} //if
-
-	                    	
 	    	            		
 	    	            } // if zoom
 	    	            else{
