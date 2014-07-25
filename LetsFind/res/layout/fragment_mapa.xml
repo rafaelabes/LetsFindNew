@@ -5,42 +5,35 @@
     android:background="@drawable/bg3"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:background="@drawable/background_title"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/path2995" />
-
-        <TextView
-            android:id="@+id/textPergunta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" &quot;ARENA ITAIPAVA FONTE NOVA&quot;"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="36dp"
+            android:background="@drawable/background_title"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/path2995" />
+
+            <TextView
+                android:id="@+id/textPergunta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" &quot;ARENA ITAIPAVA FONTE NOVA&quot;"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|right" >
+            android:layout_height="35dp"
+            android:gravity="center_vertical|right" >
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -53,14 +46,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$800" />
-
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|left"
+            android:layout_height="35dp"
+            android:gravity="left|center_vertical"
             android:orientation="horizontal" >
 
             <ImageView
@@ -74,19 +65,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="400" />
-
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonDicas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="55dp"
-            android:text="Dicas" />
-
     </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     
 </LinearLayout>

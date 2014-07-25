@@ -21,13 +21,13 @@
     <string name="YouFailed">Você errou</string>
     <string name="Congratulations">Parabens, Você Acertou!</string>
     <string name="Error">Erro</string>
-    <string name="DeniedZoomLevel">Você não pode selecionar um local nesse nível de zoom,\n por favor aumente o zoom</string>
+    <string name="DeniedZoomLevel">Você não pode selecionar um local nesse nível de zoom</string>
     <string name="GameRules">Regras do Jogo</string>
     <string name="ChooseATheme">Escolha um tema</string>
     <string name="SelectATheme">Selecione um tema</string>
     <string name="FindThePoint">Encontre o ponto solicitado</string>
     <string name="PleaseFindThisPoint">Atenção encontre o seguinte ponto no mapa:</string>
     <string name="Game">Jogo</string>
-    
+    <string name="Distance">Distância</string>
 
 </resources>

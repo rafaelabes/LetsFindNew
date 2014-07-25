@@ -76,7 +76,7 @@ public class MapaFragment extends Fragment {
 	TextView textPergunta;
 	TextView textPontos;
 	TextView textMoedas;
-	Button buttonDicas;
+	//Button buttonDicas;
 	private Usuario usuario;
 
 	
@@ -156,7 +156,7 @@ public class MapaFragment extends Fragment {
 	        	textPergunta = (TextView) view.findViewById(R.id.textPergunta);
 	        	textPontos = (TextView) view.findViewById(R.id.textPontos);
 	        	textMoedas = (TextView) view.findViewById(R.id.textMoedas);
-	        	buttonDicas = (Button) view.findViewById(R.id.buttonDicas);
+	        	//buttonDicas = (Button) view.findViewById(R.id.buttonDicas);
 	    
 	        	//O usuario é usado para atualizar os pontos
 	        	fillUsuario0();
@@ -202,11 +202,11 @@ public class MapaFragment extends Fragment {
 						Point xy = proj.toScreenLocation(point);
 						*/
 
-	    	            Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
+	    	            //Log.d("MapaFragment", "LatLng("+point.latitude+","+ point.longitude+")");
 	    	            
 	    	            
 	    	            
-	    	            if(zoom >= 16){
+	    	            //if(zoom >= 16){
 	    	            	
 	    	            	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
 	    	            	
@@ -215,48 +215,77 @@ public class MapaFragment extends Fragment {
 	    		        	while(it2.hasNext()){
 	    		        		PontoTuristico ponto = it2.next();
 	    		        		
-	    		        		if(Geometry.isPointInCircle(
-	    		        				ponto.getLatitude(),
-	    		        				ponto.getLongitude(),
-	    	            				raio,
-	    	            				point.latitude,
-	    	            				point.longitude)){
-	    	            			
-					    	        //o usuario pode clicar no mapa a partir do zoom 18
-	    		        			
-	    	            			showFoundDialog(getActivity());
-	    	            			win.start();
-
-
-	    	            			//atualiza a pontuação
-	    	            			usuario.setAcertos(usuario.getAcertos() + 1);
-	    	            			usuario.setUltimaTentativa(new Date());
-	    	            			usuarioDS.updateUsuario(usuario);
-	    	            			proximaPergunta1();
-	    	            			
-	    	            			
-	    	            		}
-	    	            		else{
-	    	            			//atualiza erros
-	    	            			usuario.setErros(usuario.getErros() + 1);
-	    	            			usuario.setUltimaTentativa(new Date());
-	    	            			usuarioDS.updateUsuario(usuario);
-	    	            			
-	    	            			showNotFoundDialog(getActivity());
-	    	            			loose.start();
-	    	            			
-	    	            		} //if
+	    		        		if(zoom >= 16){
 	    		        		
+		    		        		if(Geometry.isPointInCircle(
+		    		        				ponto.getLatitude(),
+		    		        				ponto.getLongitude(),
+		    	            				raio,
+		    	            				point.latitude,
+		    	            				point.longitude)){
+		    	            			
+						    	        //o usuario pode clicar no mapa a partir do zoom 18
+		    		        			
+		    	            			
+		
+		
+		    	            			//atualiza a pontuação
+		    	            			usuario.setAcertos(usuario.getAcertos() + 1);
+		    	            			usuario.setUltimaTentativa(new Date());
+		    	            			usuarioDS.updateUsuario(usuario);
+		    	            			
+		    	            			showFoundDialog(getActivity());
+		    	            			win.start();
+		    	            			
+		    	            			
+		    	            		}
+		    	            		else{
+		    	            			//atualiza erros
+		    	            			usuario.setErros(usuario.getErros() + 1);
+		    	            			usuario.setUltimaTentativa(new Date());
+		    	            			usuarioDS.updateUsuario(usuario);
+		    	            			
+		    	            			showNotFoundDialog(getActivity());
+		    	            			loose.start();
+		    	            			
+		    	            			
+		    	            			//log da distancia
+
+		    		        			Double dist = Geometry.getDistance(
+		    		        					ponto.getLatitude(),
+			    		        				ponto.getLongitude(),
+			    		        				point.latitude,
+			    	            				point.longitude);
+		    		        			
+		    		        			Log.wtf("Dist: ", dist.toString());
+		    	            			
+		    	            			
+		    	            			
+		    	            		} //if ispoint
+	    		        		
+	    		        		} // if zoom
+	    		        		else{
+	    		        			
+	    		        			Double dist = Geometry.getDistance(
+	    		        					ponto.getLatitude(),
+		    		        				ponto.getLongitude(),
+		    		        				point.latitude,
+		    	            				point.longitude);
+	    		        			
+	    		        			//Log.wtf("Dist: ", dist.toString());
+	    	    	            	showClickDeniedDialog(getActivity(), ",\nDistância: "+ dist.toString());
+	    	    	        		ding.start();
+	    	    	            	}
 	    		        		
 	    		        	}// while
 	    	            	
-	    	            		
+	    		        /*	
 	    	            } // if zoom
 	    	            else{
 	    	            	showClickDeniedDialog(getActivity());
 	    	        		ding.start();
-	    	            	
 	    	            	}
+	    	            */
 	    	            
             			
 	    	        }
@@ -311,6 +340,9 @@ public class MapaFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				
+				proximaPergunta1();
+				
 			}
 		});
 		
@@ -367,7 +399,7 @@ public class MapaFragment extends Fragment {
 	}
 	
 	
-	public void showClickDeniedDialog(Context context){
+	public void showClickDeniedDialog(Context context, String msg){
 		
 		if(context == null){
 			Log.wtf("showFoundDialog", "context is null");
@@ -381,7 +413,13 @@ public class MapaFragment extends Fragment {
  
 			// set the custom dialog components - text, image and button
 		TextView text = (TextView) dialog.findViewById(R.id.text);
-		text.setText(R.string.DeniedZoomLevel);
+		
+		
+		String mystring = getResources().getString(R.string.DeniedZoomLevel);
+		
+		mystring += msg;
+		
+		text.setText(mystring);
 		
 		ImageView image = (ImageView) dialog.findViewById(R.id.deniedImage);
 		image.setImageResource(R.drawable.ic_launcher);

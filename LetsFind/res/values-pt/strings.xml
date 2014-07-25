@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LetsFind</string>
+    <string name="About" >Sobre o LetsFind</string>
+    <string name="TextAbout">O Lets find foi criado na disciplina "Desenvolvimento de Aplicações para Dispositivos Móveis", e tem como objetivo encontrar pontos no mapa: esses pontos são </string>
+    <string name="hello_world">Hello world!</string>
+    <string name="Ranking" >Ranking</string>
+    <string name="Market" >Mercado</string>
+    <string name="Start" >Iniciar</string>
+    <string name="action_settings">Configurações</string>
+    <string name="Play">Jogar</string>
+    <string name="Logo">Logotipo</string>
+    <string name="Coins">Moedas</string>
+    <string name="title_activity_mapaz">Encontre os pontos solicitados</string>
+    <string name="valor_moedas">$ 256</string>
+    <string name="Close">Fechar</string>
+    <string name="ShowDetails">Mostrar Detalhes</string>
+    <string name="NotFound">Não Encontrado</string>
+    <string name="Success">Sucesso</string>
+    <string name="YouFailed">Você errou</string>
+    <string name="Congratulations">Parabens, Você Acertou!</string>
+    <string name="Error">Erro</string>
+    <string name="DeniedZoomLevel">Você não pode selecionar um local nesse nível de zoom</string>
+    <string name="GameRules">Regras do Jogo</string>
+    <string name="ChooseATheme">Escolha um tema</string>
+    <string name="SelectATheme">Selecione um tema</string>
+    <string name="FindThePoint">Encontre o ponto solicitado</string>
+    <string name="PleaseFindThisPoint">Atenção encontre o seguinte ponto no mapa:</string>
+    <string name="Game">Jogo</string>
+    <string name="Distance">Distância</string>
+
+</resources>
