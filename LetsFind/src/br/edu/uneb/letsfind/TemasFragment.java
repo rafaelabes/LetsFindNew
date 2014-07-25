@@ -22,6 +22,8 @@ public class TemasFragment extends Fragment {
 	
 	List<Tema> temas = null;
 	
+	HideBars hidebars;
+	
     public TemasFragment() {
     	//TODO: asdf
     	
@@ -40,6 +42,8 @@ public class TemasFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		
+		hidebars = new HideBars(getActivity()).Hide();
 		
 		GridView gvTemas = (GridView) getView().findViewById(R.id.gridView1);
 		
@@ -64,5 +68,13 @@ public class TemasFragment extends Fragment {
 		});
         
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		hidebars.Hide();
+	}
+	
+	
 	
 }

@@ -27,6 +27,8 @@ public class TemasActivity extends ActionBarActivity {
         	getSupportFragmentManager().beginTransaction()
             .add(R.id.container, new TemasFragment())
             .commit();
+        	
+        	setTitle(R.string.SelectATheme);
             
         }
         

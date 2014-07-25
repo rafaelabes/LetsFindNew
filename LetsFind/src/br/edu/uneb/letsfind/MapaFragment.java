@@ -21,6 +21,7 @@ import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -57,7 +58,11 @@ public class MapaFragment extends Fragment {
 	
 	private final LatLng BRASIL = new LatLng(-13.921117774841237, -54.58670552819967);
 	
-	MediaPlayer mp = null;
+	MediaPlayer loose = null;
+	MediaPlayer win = null;
+	MediaPlayer start = null;
+	MediaPlayer ding = null;
+	
 	
 	private long temaId;
 	private long perguntaId;
@@ -83,12 +88,29 @@ public class MapaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mapa, container, false);
-                
+        
+        start = MediaPlayer.create(getActivity(), R.raw.start);
+        loose = MediaPlayer.create(getActivity(), R.raw.loose);
+        win = MediaPlayer.create(getActivity(), R.raw.win);
+        ding = MediaPlayer.create(getActivity(), R.raw.ding);
+        
         return rootView;
         
     }
     
-    private void fillUsuario0(){
+    
+    
+    @Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		
+		View dv = getActivity().getWindow().getDecorView();
+        dv.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+		
+	}
+
+	private void fillUsuario0(){
     	if(usuario == null){
     		usuarioDS = new UsuarioDataSource(getActivity());
 			List<Usuario> usuarios = usuarioDS.getAllUsuarios();
@@ -113,6 +135,11 @@ public class MapaFragment extends Fragment {
     	textPergunta.setText(pergunta.getTexto());
     	textPontos.setText(String.valueOf(usuario.getAcertos()));
     	textMoedas.setText(String.valueOf(usuario.getMoedas()));
+    	
+    	
+    	showQuestionDialog(getActivity(), pergunta.getTexto());
+    	start.start();
+    	
     }
     
 	@Override
@@ -159,6 +186,9 @@ public class MapaFragment extends Fragment {
 	    	        	pontoDS = new PontoTuristicoDataSource(getActivity());
 	    	        	
 	    	        	MarkerOptions mo = new MarkerOptions();
+	    	        	
+	    	        	mo.icon(BitmapDescriptorFactory.fromResource(R.drawable.pointer));
+	    	        	
 	    	        	mo.position(point);
 	    	        	//mo.visible(false);
 	    	            map.addMarker(mo);
@@ -176,7 +206,7 @@ public class MapaFragment extends Fragment {
 	    	            
 	    	            
 	    	            
-	    	            if(zoom >= 18){
+	    	            if(zoom >= 16){
 	    	            	
 	    	            	pontos = pontoDS.getPontoTuristicoByPergunta(pergunta);
 	    	            	
@@ -193,14 +223,16 @@ public class MapaFragment extends Fragment {
 	    	            				point.longitude)){
 	    	            			
 					    	        //o usuario pode clicar no mapa a partir do zoom 18
+	    		        			
 	    	            			showFoundDialog(getActivity());
-	    	            			
-	    	            			mp = MediaPlayer.create(getActivity(), R.raw.win);
-	    	            			mp.start();
+	    	            			win.start();
+
 
 	    	            			//atualiza a pontuação
 	    	            			usuario.setAcertos(usuario.getAcertos() + 1);
 	    	            			usuario.setUltimaTentativa(new Date());
+	    	            			usuarioDS.updateUsuario(usuario);
+	    	            			proximaPergunta1();
 	    	            			
 	    	            			
 	    	            		}
@@ -208,10 +240,11 @@ public class MapaFragment extends Fragment {
 	    	            			//atualiza erros
 	    	            			usuario.setErros(usuario.getErros() + 1);
 	    	            			usuario.setUltimaTentativa(new Date());
+	    	            			usuarioDS.updateUsuario(usuario);
 	    	            			
 	    	            			showNotFoundDialog(getActivity());
-	    	            			mp = MediaPlayer.create(getActivity(), R.raw.loose);
-	    	            			mp.start();
+	    	            			loose.start();
+	    	            			
 	    	            		} //if
 	    		        		
 	    		        		
@@ -221,17 +254,10 @@ public class MapaFragment extends Fragment {
 	    	            } // if zoom
 	    	            else{
 	    	            	showClickDeniedDialog(getActivity());
-	    	            	
-	    	            	mp = MediaPlayer.create(getActivity(), R.raw.ding);
-	    	        		mp.start();
+	    	        		ding.start();
 	    	            	
 	    	            	}
 	    	            
-	    	            
-            			//salva no banco
-            			usuarioDS.updateUsuario(usuario);
-            			
-            			proximaPergunta1();
             			
 	    	        }
 	    	        
@@ -356,6 +382,44 @@ public class MapaFragment extends Fragment {
 			// set the custom dialog components - text, image and button
 		TextView text = (TextView) dialog.findViewById(R.id.text);
 		text.setText(R.string.DeniedZoomLevel);
+		
+		ImageView image = (ImageView) dialog.findViewById(R.id.deniedImage);
+		image.setImageResource(R.drawable.ic_launcher);
+ 
+		Button closeButton = (Button) dialog.findViewById(R.id.closeButton);
+			// if button is clicked, close the custom dialog
+			
+		closeButton.setOnClickListener(new View.OnClickListener() {
+				
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+ 
+		dialog.show();
+		
+	}
+	
+	
+	public void showQuestionDialog(Context context, String question){
+		
+		if(context == null){
+			Log.wtf("showFoundDialog", "context is null");
+			return;
+		}
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(context);
+		dialog.setContentView(R.layout.dialog_click_denied);
+		dialog.setTitle(R.string.GameRules);
+ 
+			// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		
+		String t = getString(R.string.PleaseFindThisPoint);
+		
+		text.setText(t+"\n"+question);
 		
 		ImageView image = (ImageView) dialog.findViewById(R.id.deniedImage);
 		image.setImageResource(R.drawable.ic_launcher);

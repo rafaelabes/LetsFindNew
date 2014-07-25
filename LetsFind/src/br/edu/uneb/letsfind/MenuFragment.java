@@ -2,6 +2,7 @@ package br.edu.uneb.letsfind;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class MenuFragment extends Fragment {
-		
+	
+    HideBars hidebars;
+    
     public MenuFragment() {
+    	
     	
     }
 
@@ -20,8 +24,22 @@ public class MenuFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
         
+        hidebars = new HideBars(getActivity()).Hide();;
+        
+        //setDecorator();
+        //hideBars();
+        
         return rootView;
     }
+    
+    @Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		
+		
+		
+	}
     
     
 	@Override
@@ -82,7 +100,14 @@ public class MenuFragment extends Fragment {
 				startActivity(it);
 			}
 		});
-			
+		
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		hidebars.Hide();
 		
 	}
 

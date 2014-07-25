@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <permission
@@ -48,24 +48,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.edu.uneb.letsfind.MapaActivity"
-            android:label="@string/title_activity_mapa" >
+            android:name="br.edu.uneb.letsfind.MapaActivity">
         </activity>
         <activity
-            android:name="br.edu.uneb.letsfind.MercadoActivity"
-            android:label="@string/title_activity_mapa" >
+            android:name="br.edu.uneb.letsfind.MercadoActivity">
         </activity>
         <activity
-            android:name="br.edu.uneb.letsfind.AboutActivity"
-            android:label="@string/title_activity_mapa" >
+            android:name="br.edu.uneb.letsfind.AboutActivity">
         </activity>
         <activity
-            android:name="br.edu.uneb.letsfind.LoginActivity"
-            android:label="@string/title_activity_mapa" >
+            android:name="br.edu.uneb.letsfind.LoginActivity">
         </activity>
         <activity
-            android:name="br.edu.uneb.letsfind.TemasActivity"
-            android:label="@string/title_activity_mapa" >
+            android:name="br.edu.uneb.letsfind.TemasActivity">
         </activity>
         
     </application>

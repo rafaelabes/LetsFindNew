@@ -24,7 +24,6 @@ public class MercadoActivity extends ActionBarActivity {
             .add(R.id.container, new MercadoFragment())
             .commit();
         	
-            
         }
         
     }

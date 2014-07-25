@@ -1682,14 +1682,15 @@ containing a value of this type.
         public static final int path2995=0x7f020084;
         public static final int point=0x7f020085;
         public static final int point2=0x7f020086;
-        public static final int powered_by_google_dark=0x7f020087;
-        public static final int powered_by_google_light=0x7f020088;
-        public static final int ranking2=0x7f020089;
-        public static final int ranking_1=0x7f02008a;
-        public static final int sobre=0x7f02008b;
-        public static final int sobre2=0x7f02008c;
-        public static final int temas2=0x7f02008d;
-        public static final int uxpin_dashboard_bg=0x7f02008e;
+        public static final int pointer=0x7f020087;
+        public static final int powered_by_google_dark=0x7f020088;
+        public static final int powered_by_google_light=0x7f020089;
+        public static final int ranking2=0x7f02008a;
+        public static final int ranking_1=0x7f02008b;
+        public static final int sobre=0x7f02008c;
+        public static final int sobre2=0x7f02008d;
+        public static final int temas2=0x7f02008e;
+        public static final int uxpin_dashboard_bg=0x7f02008f;
     }
     public static final class id {
         public static final int ImageButton01=0x7f060082;
@@ -1911,22 +1912,27 @@ containing a value of this type.
     }
     public static final class string {
         public static final int About=0x7f08002e;
-        public static final int ChooseATheme=0x7f080042;
-        public static final int Close=0x7f080039;
-        public static final int Coins=0x7f080036;
-        public static final int Congratulations=0x7f08003e;
-        public static final int DeniedZoomLevel=0x7f080040;
-        public static final int Error=0x7f08003f;
-        public static final int GameRules=0x7f080041;
-        public static final int Logo=0x7f080035;
-        public static final int Market=0x7f080031;
-        public static final int NotFound=0x7f08003b;
-        public static final int Play=0x7f080034;
-        public static final int Ranking=0x7f080030;
-        public static final int ShowDetails=0x7f08003a;
-        public static final int Start=0x7f080032;
-        public static final int Success=0x7f08003c;
-        public static final int YouFailed=0x7f08003d;
+        public static final int ChooseATheme=0x7f080043;
+        public static final int Close=0x7f08003a;
+        public static final int Coins=0x7f080037;
+        public static final int Congratulations=0x7f08003f;
+        public static final int DeniedZoomLevel=0x7f080041;
+        public static final int Error=0x7f080040;
+        public static final int FindThePoint=0x7f080045;
+        public static final int Game=0x7f080047;
+        public static final int GameRules=0x7f080042;
+        public static final int Logo=0x7f080036;
+        public static final int Market=0x7f080032;
+        public static final int NotFound=0x7f08003c;
+        public static final int Play=0x7f080035;
+        public static final int PleaseFindThisPoint=0x7f080046;
+        public static final int Ranking=0x7f080031;
+        public static final int SelectATheme=0x7f080044;
+        public static final int ShowDetails=0x7f08003b;
+        public static final int Start=0x7f080033;
+        public static final int Success=0x7f08003d;
+        public static final int TextAbout=0x7f08002f;
+        public static final int YouFailed=0x7f08003e;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f080021;
@@ -1967,7 +1973,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f08002b;
-        public static final int action_settings=0x7f080033;
+        public static final int action_settings=0x7f080034;
         public static final int app_name=0x7f08002d;
         public static final int auth_client_needs_enabling_title=0x7f080001;
         public static final int auth_client_needs_installation_title=0x7f080002;
@@ -2064,9 +2070,9 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f08001e;
-        public static final int hello_world=0x7f08002f;
-        public static final int title_activity_mapa=0x7f080037;
-        public static final int valor_moedas=0x7f080038;
+        public static final int hello_world=0x7f080030;
+        public static final int title_activity_mapaz=0x7f080038;
+        public static final int valor_moedas=0x7f080039;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

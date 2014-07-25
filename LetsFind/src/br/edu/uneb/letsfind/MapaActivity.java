@@ -27,6 +27,8 @@ public class MapaActivity extends ActionBarActivity implements ContainsTema {
         Intent intent = getIntent();
         tema = intent.getLongExtra(GameDbHelper.TABLE_TEMA, 1L);
         
+        setTitle(R.string.FindThePoint);
+        
     }
     
     @Override

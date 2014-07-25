@@ -15,4 +15,11 @@ public class Geometry {
 	}
 	
 	
+	public static double getDistance(double cx, double cy, double px, double py){
+		
+		return Math.sqrt(Math.pow(cx - px, 2) + Math.pow(cy - py, 2));
+		
+	}
+	
+	
 }
