@@ -6,13 +6,19 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ViewFlipper;
 
-public class SplashFragment extends Fragment {
+public class SplashFragment extends Fragment implements OnTouchListener {
 	
     HideBars hidebars;
+    
+    double downXValue = 0d;
     
     public SplashFragment() {
     	
@@ -22,6 +28,8 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_principal, container, false);
+        
+        rootView.setOnTouchListener(this);
         
         hidebars = new HideBars(getActivity()).Hide();;
         
@@ -106,5 +114,61 @@ public class SplashFragment extends Fragment {
 		
 	}
 
+	
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		
+		// Get the action that was done on this touch event
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+            {
+                // store the X value when the user's finger was pressed down
+                downXValue = event.getX();
+                
+                break;
+            }
+
+            case MotionEvent.ACTION_UP:
+            {
+                // Get the X value when the user released his/her finger
+                float currentX = event.getX();            
+
+                // going backwards: pushing stuff to the right
+                if (downXValue < currentX)
+                {
+                	
+                    // Get a reference to the ViewFlipper
+                     ViewFlipper vf = (ViewFlipper) getActivity().findViewById(R.id.panel);
+                     // Set the animation
+                      vf.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_right));
+                      // Flip!
+                      vf.showPrevious();
+                      
+                      Log.wtf("wtfL","Right In");
+                }
+
+                // going forwards: pushing stuff to the left
+                if (downXValue > currentX)
+                {
+                    // Get a reference to the ViewFlipper
+                    ViewFlipper vf = (ViewFlipper) getActivity().findViewById(R.id.panel);
+                     // Set the animation
+                     vf.setInAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_left));
+                      // Flip!
+                     vf.showNext();
+                     
+                     
+                     Log.wtf("wtfL","Left In");
+                }
+                break;
+            }
+        }
+
+        // if you return false, these actions will not be recorded
+        return true;
+
+		
+	}
     
 }
