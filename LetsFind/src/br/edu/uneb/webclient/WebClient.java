@@ -70,6 +70,13 @@ public class WebClient extends Thread{
 		this.parametros = parametros;
 	}
 	
+	
+	public void clearParametros(){
+		
+		parametros.clear();
+		
+	}
+	
 	public WebClient(Context context, String host, String path, String fileName, ResponseHandler responseHandler){
 		
 		this.hostAddress = host;

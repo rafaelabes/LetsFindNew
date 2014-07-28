@@ -10,18 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class MenuFragment extends Fragment {
+public class SplashFragment extends Fragment {
 	
     HideBars hidebars;
     
-    public MenuFragment() {
+    public SplashFragment() {
     	
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_principal, container, false);
         
         hidebars = new HideBars(getActivity()).Hide();;
         

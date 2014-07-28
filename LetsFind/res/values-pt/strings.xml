@@ -29,5 +29,9 @@
     <string name="PleaseFindThisPoint">Atenção encontre o seguinte ponto no mapa:</string>
     <string name="Game">Jogo</string>
     <string name="Distance">Distância</string>
+    <string name="Login">Login</string>
+    <string name="Password">Senha</string>
+    <string name="Email">Email</string>
+    <string name="Subscribe">Cadastro</string>
 
 </resources>

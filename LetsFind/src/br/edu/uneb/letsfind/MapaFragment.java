@@ -49,10 +49,11 @@ import android.widget.TextView;
 public class MapaFragment extends Fragment {
 
 	private GoogleMap map = null;
-	
 	private Float zoom = null;
 	
-	private final Double raio = 3.0694775721281596E-4;
+	//private final Double raio = 3.0694775721281596E-4;
+	
+	private final Double raio = 0.0014831620076263437;
 	
 	private final LatLng FAROL_DA_BARRA = new LatLng(-13.010315034340541,-38.53296708315611);
 	
@@ -64,9 +65,11 @@ public class MapaFragment extends Fragment {
 	MediaPlayer ding = null;
 	
 	
+	static boolean started = false;
+	
 	private long temaId;
-	private long perguntaId;
-	private Pergunta pergunta;
+	private static long perguntaId;
+	private static Pergunta pergunta;
 	private List<PontoTuristico> pontos;
 	private PontoTuristicoDataSource pontoDS;
 	private PerguntaDataSource pergDS;
@@ -123,21 +126,24 @@ public class MapaFragment extends Fragment {
 		}
     }
     
-    private void proximaPergunta1(){
-    	pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
-        perguntaId = pergunta.getId();
-        Log.wtf("PerguntaId", String.valueOf(perguntaId));
-    	if(perguntaId == pergDS.getCount()){
-    		perguntaId = 0;
+    private void proximaPergunta1(boolean b){
+    	
+    	
+    	if(b){
+	    	pergunta = pergDS.getPerguntaAfterId(temaId, perguntaId);
+	        perguntaId = pergunta.getId();
+	        Log.wtf("PerguntaId", String.valueOf(perguntaId));
+	    	if(perguntaId == pergDS.getCount()){
+	    		perguntaId = 0;
+	    	}
     	}
-
-    	if(textPergunta != null)
+    	
+    	showQuestionDialog(getActivity(), pergunta.getTexto());
+    	
     	textPergunta.setText(pergunta.getTexto());
     	textPontos.setText(String.valueOf(usuario.getAcertos()));
     	textMoedas.setText(String.valueOf(usuario.getMoedas()));
     	
-    	
-    	showQuestionDialog(getActivity(), pergunta.getTexto());
     	start.start();
     	
     }
@@ -167,12 +173,19 @@ public class MapaFragment extends Fragment {
 	        	
 	        	pergDS = new PerguntaDataSource(getActivity());
 	        	
-	        	proximaPergunta1();
-
-	        
-	        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-	        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
-			map.animateCamera(update);
+	        	 if(!started){
+		        	proximaPergunta1(true);
+		        	started = true;
+	        	 }
+	        	 
+				textPergunta.setText(pergunta.getTexto());
+				textPontos.setText(String.valueOf(usuario.getAcertos()));
+				textMoedas.setText(String.valueOf(usuario.getMoedas()));
+				
+				
+		        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+		        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(BRASIL, 4);
+				map.animateCamera(update);
 	        
 	        }
 	        
@@ -305,9 +318,6 @@ public class MapaFragment extends Fragment {
 				}
 			});
 			
-
-		
-		
 	}
 	
 	
@@ -341,7 +351,7 @@ public class MapaFragment extends Fragment {
 			public void onClick(View v) {
 				dialog.dismiss();
 				
-				proximaPergunta1();
+				proximaPergunta1(true);
 				
 			}
 		});
@@ -476,6 +486,22 @@ public class MapaFragment extends Fragment {
 		dialog.show();
 		
 	}
+
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		//proximaPergunta1(false);
+		  
+		/*
+    	textPergunta.setText(pergunta.getTexto());
+    	textPontos.setText(String.valueOf(usuario.getAcertos()));
+    	textMoedas.setText(String.valueOf(usuario.getMoedas()));
+    	*/
+		
+	}
+	
+	
 	
     
 }

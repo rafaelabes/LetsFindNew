@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class CadastroActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class LoginActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
         	
         	getSupportFragmentManager().beginTransaction()
-            .add(R.id.container, new LoginFragment())
+            .add(R.id.container, new CadastroFragment())
             .commit();
             
         }

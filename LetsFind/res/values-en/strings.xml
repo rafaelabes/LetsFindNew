@@ -29,5 +29,9 @@
     <string name="PleaseFindThisPoint">Please find this point in the map:</string>
     <string name="Game">Game</string>
     <string name="Distance">Distance</string>
-
+	<string name="Login">Login</string>
+    <string name="Password">Password</string>
+    <string name="Email">Email</string>
+    <string name="Subscribe">Sign Up</string>
+    
 </resources>
